@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile — OneAccord</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+body{background:var(--surface)}
+.prof-wrap{max-width:640px;margin:0 auto;padding:40px 24px}
+.prof-avatar{width:72px;height:72px;border-radius:50%;background:var(--ink);color:#fff;font-size:28px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.prof-name{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.prof-email-sub{font-size:14px;color:var(--muted);margin-bottom:32px}
+.prof-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.prof-section-title{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.prof-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);gap:12px;flex-wrap:wrap}
+.prof-row:last-child{border-bottom:none}
+.prof-label{font-size:14px;font-weight:600;color:var(--ink)}
+.prof-value{font-size:14px;color:var(--muted);flex:1}
+@media(max-width:600px){
+  .prof-wrap{padding:24px 14px 84px}
+  .prof-row{flex-wrap:wrap}
+  .prof-value{width:100%}
+}
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <a class="nav-logo" href="index.html"><div class="nav-logo-dot"></div>OneAccord</a>
+  <button class="nav-back" onclick="history.back()">← Back</button>
+</nav>
+<div class="prof-wrap">
+  <div id="prof-content"></div>
+</div>
+<script src="shared.js"></script>
+<script>
+window.addEventListener('load', () => {
+  const wrap = document.getElementById('prof-content');
+  const initial = (S.userName||S.email||'?').charAt(0).toUpperCase();
+  const completedCount = Object.keys(S.completedSessions).filter(k=>S.completedSessions[k]).length;
+  const stage = S.stage;
+  const stageLabel = {dating:'🌱 Dating',engaged:'💍 Engaged',married:'🕊️ Married'}[stage]||'Not set';
+
+  wrap.innerHTML = `
+    <div class="prof-avatar">${initial}</div>
+    <div class="prof-name">${S.userName||'Anonymous'}</div>
+    <div class="prof-email-sub">${S.email||'Not signed in'}</div>
+
+    <div class="prof-card">
+      <div class="prof-section-title">Account</div>
+      <div class="prof-row">
+        <span class="prof-label">Email</span>
+        <span class="prof-value">${S.email||'—'}</span>
+        ${!S.email?'<button class="btn-dark" onclick="navigate(\'signin.html\')" style="padding:9px 18px;font-size:13px">Sign In →</button>':''}
+      </div>
+      <div class="prof-row">
+        <span class="prof-label">Relationship stage</span>
+        <span class="prof-value">${stageLabel}</span>
+        <button class="btn-ghost" onclick="navigate('onboarding.html')" style="padding:6px 12px;font-size:12px">Change</button>
+      </div>
+    </div>
+
+    <div class="prof-card">
+      <div class="prof-section-title">Couple Space</div>
+      <div class="prof-row">
+        <span class="prof-label">Partner</span>
+        <span class="prof-value">${S.partnerName||'Not connected'}</span>
+        <button class="btn-ghost" onclick="navigate((S.stage||'dating')+'.html')" style="padding:6px 12px;font-size:12px">${S.coupleSpaceId?'Manage':'Connect'}</button>
+      </div>
+    </div>
+
+    <div class="prof-card">
+      <div class="prof-section-title">Progress</div>
+      <div class="prof-row"><span class="prof-label">Sessions completed</span><span class="prof-value">${completedCount}</span></div>
+      <div class="prof-row"><span class="prof-label">Declarations sealed</span><span class="prof-value">${S.declarations.length}</span></div>
+    </div>
+
+    ${S.email?`<button class="btn-ghost" style="width:100%;color:#cc4444;border-color:#ffd0d0;margin-top:8px" onclick="doSignOut()">Sign out</button>`:''}
+  `;
+});
+
+function doSignOut() {
+  if(!confirm('Sign out? Your progress is saved.')) return;
+  S.signOut();
+  toast('Signed out.');
+  setTimeout(()=>navigate('index.html'),700);
+}
+</script>
+</body>
+</html>

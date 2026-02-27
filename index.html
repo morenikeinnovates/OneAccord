@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OneAccord — Guided Conversations for Couples</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ── LANDING NAV ── */
+.land-nav {
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;
+  padding:0 48px;height:64px;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.land-logo { font-size:18px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:8px;cursor:pointer; }
+.land-logo-dot { width:8px;height:8px;border-radius:50%;background:var(--lime); }
+.land-nav-links { display:flex;gap:28px;margin:0 auto; }
+.land-nav-link { font-size:14px;font-weight:500;color:var(--muted);background:none;border:none;cursor:pointer;transition:color .2s;font-family:inherit; }
+.land-nav-link:hover { color:var(--ink); }
+.nav-cta { background:var(--ink);color:#fff;border:none;font-family:inherit;font-size:14px;font-weight:600;padding:10px 22px;border-radius:8px;cursor:pointer;transition:all .2s; }
+.nav-cta:hover { background:var(--ink2);transform:translateY(-1px); }
+.nav-login { font-size:14px;font-weight:500;color:var(--muted);background:none;border:none;cursor:pointer;margin-right:12px;font-family:inherit;transition:color .2s; }
+.nav-login:hover { color:var(--ink); }
+
+/* ── HERO ── */
+.hero {
+  display:grid;grid-template-columns:1fr 480px;
+  gap:40px;align-items:center;
+  padding:80px 80px 60px;
+  max-width:1200px;margin:0 auto;width:100%;
+}
+.hero-badge { display:inline-flex;align-items:center;gap:8px;background:var(--lime-bg);border:1px solid #c8e87a;padding:5px 12px;border-radius:100px;font-size:12px;font-weight:600;color:#4a6b1a;margin-bottom:20px; }
+.hero-badge-dot { width:6px;height:6px;border-radius:50%;background:var(--lime); }
+.hero-h1 { font-size:clamp(40px,5vw,62px);font-weight:800;line-height:1.08;letter-spacing:-1.5px;color:var(--ink);margin-bottom:20px; }
+.hero-h1 em { font-style:normal;color:var(--muted);font-weight:400; }
+.hero-sub { font-size:17px;font-weight:400;color:var(--muted);line-height:1.65;max-width:440px;margin-bottom:36px; }
+.hero-btns { display:flex;gap:12px;flex-wrap:wrap; }
+
+/* ── HERO VISUAL ── */
+.hero-visual { position:relative; }
+.hero-card { background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px; }
+.hero-card-title { font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin-bottom:16px; }
+.spi { background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:10px; }
+.spi:first-child { border-color:#c8e87a;background:var(--lime-bg); }
+.spi-emoji { font-size:18px; }
+.spi-name { font-size:14px;font-weight:600;color:var(--ink); }
+.spi-sub { font-size:12px;color:var(--muted);margin-top:1px; }
+.spi-text { flex:1; }
+
+/* ── TRUST BAR ── */
+.trust-bar { border-top:1px solid var(--border);padding:28px 80px;display:flex;align-items:center;gap:32px;max-width:1200px;margin:0 auto;width:100%; }
+.trust-label { font-size:13px;color:var(--subtle);font-weight:500; }
+.trust-items { display:flex;gap:24px; }
+.trust-item { font-size:13px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:6px; }
+.trust-check { color:var(--lime);font-size:14px; }
+
+/* ── SECTIONS ── */
+.land-section { padding:80px 80px;max-width:1200px;margin:0 auto;width:100%; }
+.section-label { font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);background:var(--lime-bg);padding:4px 12px;border-radius:100px;display:inline-block;margin-bottom:16px; }
+.section-h2 { font-size:clamp(28px,4vw,44px);font-weight:800;line-height:1.1;letter-spacing:-1px;color:var(--ink);margin-bottom:12px; }
+.section-sub { font-size:16px;color:var(--muted);line-height:1.6;max-width:500px;margin-bottom:48px; }
+
+.feature-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:20px; }
+.feat-card { background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;transition:all .25s; }
+.feat-card:hover { box-shadow:var(--shadow2);transform:translateY(-3px);border-color:var(--border2); }
+.feat-icon { width:44px;height:44px;background:var(--lime);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px; }
+.feat-title { font-size:17px;font-weight:700;color:var(--ink);margin-bottom:8px; }
+.feat-desc { font-size:14px;color:var(--muted);line-height:1.6; }
+
+/* ── STAGES SECTION ── */
+.stages-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px; }
+.stage-feature { background:#fff;border:2px solid var(--border);border-radius:20px;padding:36px 28px;text-align:center;cursor:pointer;transition:all .25s;text-decoration:none;display:block; }
+.stage-feature:hover { border-color:var(--lime);transform:translateY(-4px);box-shadow:var(--shadow2); }
+.stage-feature-emoji { font-size:48px;margin-bottom:20px;display:block; }
+.stage-feature-name { font-size:22px;font-weight:800;color:var(--ink);margin-bottom:10px; }
+.stage-feature-desc { font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:20px; }
+.stage-feature-tag { font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--lime);background:var(--lime-bg);padding:4px 12px;border-radius:100px; }
+
+/* ── HOW SECTION ── */
+.how-section { background:var(--ink);color:#fff;padding:80px; }
+.how-inner { max-width:1200px;margin:0 auto; }
+.how-section .section-label { background:rgba(184,224,74,.15);color:var(--lime); }
+.how-section .section-h2 { color:#fff; }
+.how-section .section-sub { color:rgba(255,255,255,.55); }
+.how-steps { display:grid;grid-template-columns:repeat(3,1fr);gap:32px; }
+.how-step-num { font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--lime);margin-bottom:16px;display:flex;align-items:center;gap:8px; }
+.how-step-num::after { content:'';flex:1;height:1px;background:rgba(255,255,255,.08); }
+.how-step-title { font-size:20px;font-weight:700;color:#fff;margin-bottom:10px; }
+.how-step-desc { font-size:14px;color:rgba(255,255,255,.5);line-height:1.65; }
+
+/* ── CTA SECTION ── */
+.cta-section { padding:80px;text-align:center;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border); }
+.cta-btns { display:flex;gap:12px;justify-content:center;flex-wrap:wrap; }
+
+/* ── FOOTER ── */
+.land-footer { padding:40px 80px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border); }
+.footer-logo { font-size:16px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:6px; }
+.footer-copy { font-size:13px;color:var(--subtle); }
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .land-nav { padding:0 24px; }
+  .land-nav-links { display:none; }
+  .hero { grid-template-columns:1fr;padding:48px 24px 32px; }
+  .hero-visual { display:none; }
+  .trust-bar { padding:20px 24px;flex-wrap:wrap;gap:12px; }
+  .trust-items { flex-wrap:wrap;gap:12px; }
+  .land-section { padding:48px 24px; }
+  .feature-grid { grid-template-columns:1fr 1fr; }
+  .stages-grid { grid-template-columns:1fr; }
+  .how-section { padding:48px 24px; }
+  .how-steps { grid-template-columns:1fr 1fr;gap:20px; }
+  .cta-section { padding:48px 24px; }
+  .land-footer { padding:24px; }
+}
+@media(max-width:600px){
+  .land-nav { padding:0 16px;height:56px; }
+  .nav-login { display:none; }
+  .nav-cta { padding:9px 16px;font-size:13px; }
+  .hero { padding:28px 16px 20px; }
+  .hero-h1 { font-size:34px;letter-spacing:-.8px; }
+  .hero-sub { font-size:15px; }
+  .hero-btns { flex-direction:column; }
+  .trust-bar { padding:12px 16px; }
+  .trust-label { display:none; }
+  .trust-items { gap:8px; }
+  .trust-item { font-size:11px; }
+  .land-section { padding:36px 16px; }
+  .section-sub { margin-bottom:28px; }
+  .feature-grid { grid-template-columns:1fr;gap:10px; }
+  .how-section { padding:36px 16px; }
+  .how-steps { grid-template-columns:1fr;gap:16px; }
+  .cta-section { padding:36px 16px; }
+  .cta-btns { flex-direction:column; }
+  .land-footer { padding:20px 16px;flex-direction:column;gap:8px;text-align:center; }
+}
+</style>
+</head>
+<body>
+
+<nav class="land-nav">
+  <div class="land-logo"><div class="land-logo-dot"></div>OneAccord</div>
+  <div class="land-nav-links">
+    <button class="land-nav-link" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">How it works</button>
+    <button class="land-nav-link" onclick="document.getElementById('stages').scrollIntoView({behavior:'smooth'})">Relationship stages</button>
+  </div>
+  <button class="nav-login" onclick="navigate('signin.html')">Sign in</button>
+  <button class="nav-cta" onclick="navigate('onboarding.html')">Begin →</button>
+</nav>
+
+<div class="hero">
+  <div>
+    <div class="hero-badge"><div class="hero-badge-dot"></div>Guided conversations for Christian couples</div>
+    <h1 class="hero-h1">Two people.<br><em>One accord.</em><br>Every conversation.</h1>
+    <p class="hero-sub">Structured sessions that build shared conviction — from who you are to where you're going, together.</p>
+    <div class="hero-btns">
+      <button class="btn-dark" onclick="navigate('onboarding.html')">Begin Your Sessions →</button>
+      <button class="btn-outline" onclick="navigate('signin.html')">Sign in</button>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card">
+      <div class="hero-card-title">Your Session Library</div>
+      <div class="spi">
+        <span class="spi-emoji">✝️</span>
+        <div class="spi-text">
+          <div class="spi-name">How We Worship</div>
+          <div class="spi-sub">Faith & Spiritual Growth</div>
+        </div>
+        <span class="badge badge-lime">✓ Done</span>
+      </div>
+      <div class="spi">
+        <span class="spi-emoji">⚖️</span>
+        <div class="spi-text">
+          <div class="spi-name">How We Fight</div>
+          <div class="spi-sub">Conflict</div>
+        </div>
+        <span class="badge badge-amber">⏳ Your turn</span>
+      </div>
+      <div class="spi">
+        <span class="spi-emoji">💰</span>
+        <div class="spi-text">
+          <div class="spi-name">How We Spend</div>
+          <div class="spi-sub">Money</div>
+        </div>
+        <span class="badge badge-gray">Not started</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="trust-bar">
+  <span class="trust-label">Built for</span>
+  <div class="trust-items">
+    <div class="trust-item"><span class="trust-check">✓</span> Christian couples</div>
+    <div class="trust-item"><span class="trust-check">✓</span> Deep & Flashcard modes</div>
+    <div class="trust-item"><span class="trust-check">✓</span> Async Couple Sync</div>
+    <div class="trust-item"><span class="trust-check">✓</span> Growth history</div>
+  </div>
+</div>
+
+<div class="land-section" id="stages">
+  <div class="section-label">Every stage of love</div>
+  <h2 class="section-h2">Sessions built for<br>where you actually are.</h2>
+  <p class="section-sub">OneAccord follows your relationship from the first intentional conversation all the way through the years of marriage.</p>
+  <div class="stages-grid">
+    <a class="stage-feature" href="dating.html">
+      <span class="stage-feature-emoji">🌱</span>
+      <div class="stage-feature-name">Dating</div>
+      <div class="stage-feature-desc">Exploring with intention. Sessions that surface compatibility, values, and the real stories behind the person you're falling for.</div>
+      <span class="stage-feature-tag">Start here →</span>
+    </a>
+    <a class="stage-feature" href="engaged.html">
+      <span class="stage-feature-emoji">💍</span>
+      <div class="stage-feature-name">Engaged</div>
+      <div class="stage-feature-desc">Preparing for the covenant. The deep conversations about faith, family, money, and intimacy that need to happen before the altar.</div>
+      <span class="stage-feature-tag">Explore →</span>
+    </a>
+    <a class="stage-feature" href="married.html">
+      <span class="stage-feature-emoji">🕊️</span>
+      <div class="stage-feature-name">Married</div>
+      <div class="stage-feature-desc">Going deeper, year after year. Sessions that strengthen communication, resolve conflict, and realign shared vision over time.</div>
+      <span class="stage-feature-tag">Explore →</span>
+    </a>
+  </div>
+</div>
+
+<div class="land-section">
+  <div class="section-label">What's inside</div>
+  <h2 class="section-h2">Four pillars that go<br>deeper than ever.</h2>
+  <p class="section-sub">Identity, Couple Sync, Progress Tracking, and Growth History — built so this platform is worth returning to for years.</p>
+  <div class="feature-grid">
+    <div class="feat-card"><div class="feat-icon">🔐</div><div class="feat-title">Identity & Email</div><div class="feat-desc">Magic link sign-in — no password. Your progress, declarations, and history persist across every device.</div></div>
+    <div class="feat-card"><div class="feat-icon">🔗</div><div class="feat-title">Couple Sync</div><div class="feat-desc">Two accounts, one shared space. Engage sessions independently and co-author your declarations.</div></div>
+    <div class="feat-card"><div class="feat-icon">📈</div><div class="feat-title">Progress Tracking</div><div class="feat-desc">A Progress tab shows your journey across all categories — what you've done and what's next.</div></div>
+    <div class="feat-card"><div class="feat-icon">📖</div><div class="feat-title">Growth History</div><div class="feat-desc">Revisit any session and see your declarations side by side across attempts.</div></div>
+    <div class="feat-card"><div class="feat-icon">🔒</div><div class="feat-title">Privacy by Design</div><div class="feat-desc">My Story reflections are yours alone. Your Story answers are shared with your partner only after you submit.</div></div>
+    <div class="feat-card"><div class="feat-icon">⚡</div><div class="feat-title">Do Again</div><div class="feat-desc">Come back as your relationship grows. Every attempt is preserved, never overwritten.</div></div>
+  </div>
+</div>
+
+<div class="how-section" id="how">
+  <div class="how-inner">
+    <div class="section-label">How it works</div>
+    <h2 class="section-h2">From two stories<br>to one conviction.</h2>
+    <p class="section-sub">Each session moves through a structured flow — designed to surface, share, and seal what you believe together.</p>
+    <div class="how-steps">
+      <div class="how-step"><div class="how-step-num">01</div><div class="how-step-title">My Story</div><div class="how-step-desc">Private reflection on your own background, fears, and values. You write first — alone — then share.</div></div>
+      <div class="how-step"><div class="how-step-num">02</div><div class="how-step-title">Your Story</div><div class="how-step-desc">Your observations and understanding of your partner. Visible to them only after you submit.</div></div>
+      <div class="how-step"><div class="how-step-num">03</div><div class="how-step-title">Find Our Middle</div><div class="how-step-desc">From two perspectives to one shared position. You discuss, discover, and write it together.</div></div>
+      <div class="how-step"><div class="how-step-num">04</div><div class="how-step-title">Our Declaration</div><div class="how-step-desc">Seal your conviction. A permanent, dated record of what you agree on.</div></div>
+      <div class="how-step"><div class="how-step-num">05</div><div class="how-step-title">Couple Sync</div><div class="how-step-desc">Each partner engages on their own device. When both are done, seal the declaration together.</div></div>
+      <div class="how-step"><div class="how-step-num">06</div><div class="how-step-title">Come Back</div><div class="how-step-desc">Revisit sessions as your relationship grows. See how your declarations evolve across attempts.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="cta-section">
+  <div class="section-label">Get started</div>
+  <h2 class="section-h2">Every conversation counts.</h2>
+  <p class="section-sub" style="margin:0 auto 36px;">Start with Session Zero — no email required. You can save your progress at any time.</p>
+  <div class="cta-btns">
+    <button class="btn-dark" onclick="navigate('onboarding.html')">Begin Your Sessions →</button>
+    <button class="btn-outline" onclick="navigate('signin.html')">Sign in to continue</button>
+  </div>
+</div>
+
+<footer class="land-footer">
+  <div class="footer-logo"><div class="land-logo-dot"></div>OneAccord</div>
+  <div class="footer-copy">Two people. One accord. Every conversation counts.</div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+// Check if user already has a stage set and redirect accordingly
+window.addEventListener('load', () => {
+  // Update nav if signed in
+  if (S.email) {
+    const loginBtn = document.querySelector('.nav-login');
+    if (loginBtn) { loginBtn.textContent = S.userName || S.email; loginBtn.onclick = () => navigate(S.stage ? S.stage + '.html' : 'onboarding.html'); }
+    const ctaBtn = document.querySelector('.nav-cta');
+    if (ctaBtn) { ctaBtn.textContent = 'Continue →'; ctaBtn.onclick = () => navigate(S.stage ? S.stage + '.html' : 'onboarding.html'); }
+  }
+});
+</script>
+</body>
+</html>
