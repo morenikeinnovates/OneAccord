@@ -3,311 +3,383 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Married Sessions — OneAccord</title>
+<title>OneAccord — Married Sessions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared.css">
 <style>
-/* ── LIBRARY ── */
-.lib-wrap { flex:1;padding:32px 40px;max-width:1100px;margin:0 auto;width:100%; }
-.lib-top { display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px; }
-.stage-pill { display:inline-flex;align-items:center;gap:8px;background:var(--lime-bg);border:1px solid #c8e87a;padding:5px 14px;border-radius:100px;font-size:13px;font-weight:700;color:#4a6b1a; }
-.other-stages { font-size:13px;color:var(--muted); }
-.other-stages a { color:var(--muted);text-decoration:underline;cursor:pointer; }
-.other-stages a:hover { color:var(--ink); }
+/* ── Library ── */
+.library-wrap{flex:1;padding:32px 40px 60px;max-width:1100px;margin:0 auto;width:100%}
+.lib-top{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+.stage-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--lime-bg);border:1px solid var(--lime-border);
+  padding:4px 13px;border-radius:100px;
+  font-size:12px;font-weight:700;color:#4a6b1a;
+}
+.couple-bar{
+  background:var(--lime-bg);border:1.5px solid var(--lime-border);
+  border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;
+  display:flex;align-items:center;gap:14px;
+}
+.couple-bar-icon{font-size:20px}
+.couple-bar-text{flex:1}
+.couple-bar-title{font-size:14px;font-weight:700;color:var(--ink)}
+.couple-bar-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.connect-cta{
+  background:#fff;border:1.5px dashed var(--border2);
+  border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;
+  display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .2s;
+}
+.connect-cta:hover{border-color:var(--lime);background:var(--lime-bg)}
+.rec-section{margin-bottom:24px}
+.rec-heading{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--subtle);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.rec-heading::after{content:'';flex:1;height:1px;background:var(--border)}
+.rec-path{display:flex;gap:10px;flex-wrap:wrap}
+.rec-step{
+  background:#fff;border:1.5px solid var(--border);border-radius:10px;
+  padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;
+  display:flex;align-items:center;gap:8px;transition:all .2s;
+}
+.rec-step:hover{border-color:var(--ink);background:var(--surface)}
+.rec-step-next{border-color:var(--lime-border);background:var(--lime-bg);color:#4a6b1a}
+.all-cats-heading{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--subtle);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.all-cats-heading::after{content:'';flex:1;height:1px;background:var(--border)}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.cat-card{
+  background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);
+  padding:22px 18px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;
+}
+.cat-card:hover{border-color:var(--border2);box-shadow:var(--shadow);transform:translateY(-2px)}
+.cat-emoji{font-size:22px;margin-bottom:10px;display:block}
+.cat-name{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.cat-count{font-size:12px;color:var(--muted);margin-bottom:10px}
+.cat-progress-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:8px}
+.cat-progress-fill{height:100%;background:var(--lime);border-radius:2px;transition:width .4s}
+.cat-complete-badge{
+  position:absolute;top:10px;right:10px;
+  background:var(--lime);color:#2a4010;
+  font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;
+}
 
-/* Couple banners */
-.couple-banner { display:flex;align-items:center;gap:14px;background:var(--lime-bg);border:1.5px solid #c8e87a;border-radius:var(--radius);padding:16px 20px;margin-bottom:20px; }
-.cb-icon { font-size:24px; }
-.cb-text { flex:1; }
-.cb-title { font-size:15px;font-weight:700;color:var(--ink);margin-bottom:2px; }
-.cb-sub { font-size:13px;color:var(--muted); }
-.connect-cta { display:flex;align-items:center;gap:14px;background:var(--surface);border:1.5px dashed var(--border2);border-radius:var(--radius);padding:16px 20px;cursor:pointer;margin-bottom:20px;transition:all .2s; }
-.connect-cta:hover { border-color:var(--ink);background:#fff; }
-.connect-cta-icon { font-size:20px; }
-.connect-cta-text { flex:1; }
-.connect-cta-title { font-size:14px;font-weight:700;color:var(--ink);margin-bottom:2px; }
-.connect-cta-sub { font-size:12px;color:var(--muted);line-height:1.4; }
-.connect-cta-arrow { font-size:18px;color:var(--muted); }
+/* ── Picker ── */
+.picker-wrap{flex:1;display:flex;flex-direction:column;align-items:center;padding:40px 24px;max-width:680px;margin:0 auto;width:100%}
+.session-list{width:100%;margin-bottom:28px}
+.sess-item{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:var(--radius);padding:16px 20px;margin-bottom:10px;
+  cursor:pointer;transition:all .22s;
+}
+.sess-item:hover,.sess-item.selected{border-color:var(--ink);background:#fff;box-shadow:var(--shadow)}
+.sess-item.selected{border-color:var(--lime);background:var(--lime-bg)}
+.sess-item-main{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sess-title{font-size:15px;font-weight:700;color:var(--ink)}
+.sess-sub{font-size:13px;color:var(--muted);margin-top:2px}
+.sess-item-meta{margin-top:10px;padding-top:10px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sess-attempts-link{font-size:12px;color:var(--muted);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:var(--fb)}
+.sess-do-again{font-size:12px;font-weight:600;color:#4a6b1a;background:none;border:none;cursor:pointer;font-family:var(--fb);margin-left:auto;display:flex;align-items:center;gap:4px}
+.mode-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--subtle);width:100%;margin-bottom:12px}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;margin-bottom:28px}
+.mode-card{
+  border:1.5px solid var(--border);border-radius:var(--radius);padding:20px 18px;
+  cursor:pointer;transition:all .22s;background:#fff;
+}
+.mode-card:hover{border-color:var(--border2);box-shadow:var(--shadow)}
+.mode-card.selected{border-color:var(--ink);background:var(--ink)}
+.mode-card.selected .mode-name{color:#fff}
+.mode-card.selected .mode-time{color:var(--lime)}
+.mode-card.selected .mode-desc{color:rgba(255,255,255,.5)}
+.mode-icon{font-size:22px;margin-bottom:8px}
+.mode-name{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.mode-time{font-size:12px;font-weight:600;color:var(--lime);margin-bottom:6px}
+.mode-desc{font-size:13px;color:var(--muted);line-height:1.5}
+.attempts-panel{
+  width:100%;border:1.5px solid var(--border);border-radius:var(--radius);
+  overflow:hidden;background:#fff;margin-bottom:20px;
+}
+.attempts-panel-header{
+  background:var(--surface);padding:12px 16px;
+  font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+}
+.attempt-item{padding:14px 16px;border-top:1px solid var(--border);cursor:pointer;transition:background .2s}
+.attempt-item:hover{background:var(--surface)}
+.attempt-meta{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.attempt-date{font-size:12px;font-weight:600;color:var(--muted)}
+.attempt-stage-tag,.attempt-mode-tag{font-size:11px;color:var(--subtle)}
+.attempt-decl{font-size:13px;color:var(--ink);line-height:1.6;font-style:italic;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
-/* Recommended path */
-.rec-section { margin-bottom:28px; }
-.rec-heading { font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--subtle);margin-bottom:12px;display:flex;align-items:center;gap:10px; }
-.rec-heading::after { content:'';flex:1;height:1px;background:var(--border); }
-.rec-path { display:flex;gap:10px;flex-wrap:wrap; }
-.rec-step { background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px; }
-.rec-step:hover { border-color:var(--ink);color:var(--ink); }
-.rec-step.done { background:var(--lime-bg);border-color:#c8e87a;color:#4a6b1a; }
+/* ── Flash Session ── */
+.flash-wrap{flex:1;display:flex;flex-direction:column;align-items:center;padding:36px 20px;max-width:680px;margin:0 auto;width:100%}
+.flash-progress{display:flex;gap:5px;width:100%;margin-bottom:20px}
+.fp-seg{height:3px;flex:1;border-radius:2px;background:var(--border);transition:background .3s}
+.fp-seg.done{background:var(--lime)}
+.fp-seg.active{background:var(--ink)}
+.flash-counter{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:24px}
+.flashcard-scene{width:100%;perspective:1000px;margin-bottom:24px;cursor:pointer}
+.flashcard{width:100%;min-height:260px;position:relative;transform-style:preserve-3d;transition:transform .5s ease;border-radius:20px}
+.flashcard.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;padding:32px;display:flex;flex-direction:column}
+.fc-front{background:var(--ink);color:#fff;align-items:center;justify-content:center;text-align:center}
+.fc-back{background:var(--lime-bg);border:1.5px solid var(--lime-border);transform:rotateY(180deg);align-items:flex-start}
+.fc-tag{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:16px}
+.fc-back .fc-tag{color:#4a6b1a}
+.fc-question{font-size:20px;font-weight:700;color:#fff;line-height:1.4}
+.fc-hint{font-size:12px;color:rgba(255,255,255,.35);margin-top:auto}
+.fc-answer-label{font-size:13px;font-weight:700;color:#4a6b1a;margin-bottom:10px}
+.fc-prompt{font-size:15px;color:var(--ink2);line-height:1.6;font-style:italic}
+.flash-controls{display:flex;gap:12px;width:100%;justify-content:center;margin-bottom:16px}
+.flash-btn{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:11px 20px;font-family:var(--fb);font-size:14px;font-weight:600;color:var(--ink);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
+.flash-btn:hover{border-color:var(--ink);box-shadow:var(--shadow)}
+.flash-btn-next{background:var(--ink);color:#fff;border-color:var(--ink);flex:1}
+.flash-btn-next:hover{background:var(--ink2)}
+.flash-btn-finish{background:var(--lime);color:#2a4010;border-color:var(--lime);flex:1;font-weight:700}
+.flash-decl-wrap{width:100%;background:var(--ink);border-radius:var(--radius);padding:28px;margin-top:16px}
+.flash-decl-preamble{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);margin-bottom:8px}
+.flash-decl-starter{font-size:20px;font-weight:700;color:var(--lime);font-style:italic;display:block;margin-bottom:10px}
+.flash-decl-field{width:100%;font-family:var(--fb);font-size:16px;font-weight:500;font-style:italic;color:#fff;background:transparent;border:none;border-bottom:1.5px solid rgba(255,255,255,.15);padding:8px 0;resize:none;min-height:80px;line-height:1.7;outline:none;transition:border-color .2s}
+.flash-decl-field:focus{border-bottom-color:var(--lime)}
+.flash-decl-hint{font-size:12px;color:rgba(255,255,255,.3);margin-top:10px}
 
-/* Category grid */
-.all-cats-heading { font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--subtle);margin-bottom:16px;margin-top:32px;display:flex;align-items:center;gap:10px; }
-.all-cats-heading::after { content:'';flex:1;height:1px;background:var(--border); }
-.cat-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px; }
-.cat-card { background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:22px 18px;cursor:pointer;transition:all .22s;position:relative; }
-.cat-card:hover { border-color:var(--border2);box-shadow:var(--shadow);transform:translateY(-2px); }
-.cat-done-badge { position:absolute;top:12px;right:12px;background:var(--lime);color:#2a4010;font-size:10px;font-weight:700;padding:2px 7px;border-radius:100px; }
-.cat-emoji { font-size:22px;display:block;margin-bottom:10px; }
-.cat-name { font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px; }
-.cat-count { font-size:12px;color:var(--muted);margin-bottom:10px; }
-.cat-bar { height:3px;background:var(--border);border-radius:2px;overflow:hidden; }
-.cat-bar-fill { height:100%;background:var(--lime);border-radius:2px;transition:width .4s; }
+/* ── Deep Session ── */
+.sess-topbar{background:#fff;border-bottom:1px solid var(--border);padding:0 40px;height:50px;display:flex;align-items:center;gap:16px;position:sticky;top:62px;z-index:50}
+.sess-cat{font-size:13px;font-weight:600;color:var(--muted)}
+.sess-prog{display:flex;gap:4px;flex:1;justify-content:center}
+.sp-seg{height:3px;width:44px;border-radius:2px;background:var(--border);transition:background .4s}
+.sp-seg.done{background:var(--lime)}
+.sp-seg.active{background:var(--ink)}
+.sess-step-label{font-size:12px;color:var(--subtle);min-width:80px;text-align:right}
+.sess-body{flex:1;max-width:720px;margin:0 auto;width:100%;padding:44px 32px 80px;animation:fadeUp .35s ease}
+.sec-tag{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#4a6b1a;background:var(--lime-bg);padding:3px 10px;border-radius:100px;display:inline-block;margin-bottom:14px}
+.sec-title{font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-.5px;color:var(--ink);line-height:1.15;margin-bottom:22px}
+.prayer-block{background:var(--ink);border-radius:var(--radius);padding:30px 32px;position:relative;overflow:hidden}
+.prayer-block::before{content:'"';position:absolute;top:-10px;left:16px;font-size:90px;color:rgba(184,224,74,.1);font-family:serif;line-height:1}
+.prayer-text{font-size:18px;font-weight:500;color:#fff;line-height:1.65;font-style:italic;position:relative;z-index:1;margin-bottom:12px}
+.prayer-cue{font-size:12px;font-weight:600;color:var(--lime);letter-spacing:.08em;position:relative;z-index:1}
+.why-text{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:18px}
+.scripture-block{background:var(--lime-bg);border:1px solid var(--lime-border);border-radius:var(--radius);padding:18px 22px;margin:18px 0}
+.scripture-verse{font-size:15px;color:var(--ink);line-height:1.65;font-style:italic;font-weight:500;margin-bottom:6px}
+.scripture-ref{font-size:12px;font-weight:700;color:#4a6b1a;letter-spacing:.06em}
+.privacy-note{font-size:13px;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:10px 14px;margin-bottom:16px}
+.couple-sync-notice{background:var(--amber-bg);border:1px solid #f0cc80;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#8a5a00;line-height:1.5}
+.q-stack{display:flex;flex-direction:column;gap:14px}
+.q-block{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:18px 20px;transition:border-color .2s}
+.q-block:focus-within{border-color:var(--lime)}
+.q-num{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--subtle);text-transform:uppercase;margin-bottom:6px}
+.q-text{font-size:15px;font-weight:600;color:var(--ink);line-height:1.5;margin-bottom:10px}
+.middle-stack{display:flex;flex-direction:column;gap:12px}
+.mid-item{display:flex;gap:12px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;transition:border-color .2s}
+.mid-item:focus-within{border-color:var(--lime)}
+.mid-n{font-size:20px;font-weight:800;color:var(--border2);flex-shrink:0;width:24px;line-height:1.3}
+.mid-content{flex:1}
+.mid-prompt{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px;line-height:1.4}
+.decl-wrap{background:var(--ink);border-radius:var(--radius);padding:28px 32px;margin:16px 0}
+.decl-preamble{font-size:20px;font-weight:700;color:var(--lime);display:block;margin-bottom:12px;font-style:italic}
+.decl-field{width:100%;font-family:var(--fb);font-size:16px;font-weight:500;font-style:italic;color:#fff;background:transparent;border:none;border-bottom:1.5px solid rgba(255,255,255,.15);padding:8px 0;resize:none;min-height:80px;line-height:1.7;outline:none;transition:border-color .2s}
+.decl-field:focus{border-bottom-color:var(--lime)}
+.decl-hint{font-size:12px;color:rgba(255,255,255,.3);margin-top:10px}
+.sess-nav{display:flex;align-items:center;justify-content:space-between;margin-top:40px;padding-top:24px;border-top:1px solid var(--border);gap:12px}
+.btn-back-sess{background:none;border:1.5px solid var(--border);font-family:var(--fb);font-size:14px;font-weight:500;color:var(--muted);padding:11px 20px;border-radius:9px;cursor:pointer;transition:all .2s}
+.btn-back-sess:hover{border-color:var(--ink);color:var(--ink)}
+.btn-next-sess{background:var(--ink);color:#fff;border:none;font-family:var(--fb);font-size:14px;font-weight:600;padding:11px 26px;border-radius:9px;cursor:pointer;transition:all .2s}
+.btn-next-sess:hover{background:var(--ink2)}
+.btn-finish-sess{background:var(--lime);color:#2a4010;border:none;font-family:var(--fb);font-size:14px;font-weight:700;padding:11px 26px;border-radius:9px;cursor:pointer;transition:all .2s}
+.btn-finish-sess:hover{background:var(--lime2);transform:translateY(-1px);box-shadow:var(--shadow2)}
 
-/* ── PICKER ── */
-.picker-wrap { flex:1;padding:48px 32px;max-width:700px;margin:0 auto;width:100%; }
-.sess-list { width:100%;margin-bottom:28px; }
-.sess-item { background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:10px;cursor:pointer;transition:all .22s; }
-.sess-item:hover,.sess-item.selected { border-color:var(--ink);background:#fff;box-shadow:var(--shadow); }
-.sess-item.selected { border-color:var(--lime);background:var(--lime-bg); }
-.sess-item-top { display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px; }
-.sess-title { font-size:16px;font-weight:700;color:var(--ink);margin-bottom:2px; }
-.sess-sub { font-size:13px;color:var(--muted); }
-.sess-item-meta { display:flex;align-items:center;gap:8px;flex-wrap:wrap; }
-.attempts-link { font-size:11px;color:var(--muted);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:inherit; }
-.attempts-link:hover { color:var(--ink); }
-.do-again-btn { font-size:11px;font-weight:600;color:var(--lime);background:none;border:none;cursor:pointer;font-family:inherit;margin-left:auto; }
-.attempts-panel { margin-top:10px;padding-top:10px;border-top:1px solid var(--border); }
-.attempt-item { padding:10px 0;border-bottom:1px solid var(--border); }
-.attempt-item:last-child { border-bottom:none; }
-.attempt-meta { display:flex;align-items:center;gap:8px;margin-bottom:4px; }
-.attempt-date { font-size:12px;font-weight:600;color:var(--muted); }
-.attempt-mode { font-size:11px;color:var(--subtle); }
-.attempt-decl { font-size:13px;color:var(--ink);line-height:1.5;font-style:italic; }
+/* ── Confirm ── */
+.confirm-body{flex:1;display:flex;flex-direction:column;align-items:center;padding:60px 24px;text-align:center}
+.confirm-icon{width:68px;height:68px;border-radius:50%;background:var(--lime);font-size:28px;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.confirm-h2{font-family:var(--fd);font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-.5px;margin-bottom:10px}
+.confirm-sub{font-size:15px;color:var(--muted);line-height:1.65;margin-bottom:28px;max-width:400px}
+.confirm-decl-card{background:var(--ink);border-radius:16px;padding:28px;width:100%;max-width:520px;margin-bottom:28px;text-align:left}
+.confirm-decl-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);margin-bottom:12px}
+.confirm-decl-text{font-size:17px;color:#fff;line-height:1.65;font-style:italic;font-weight:500}
+.confirm-email-capture{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;width:100%;max-width:520px;margin-bottom:20px;text-align:left}
+.cec-title{font-size:15px;font-weight:700;margin-bottom:6px}
+.cec-sub{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px}
+.cec-row{display:flex;gap:10px}
+.cec-input{flex:1;font-family:var(--fb);font-size:14px;color:var(--ink);background:#fff;border:1.5px solid var(--border);border-radius:9px;padding:10px 13px;outline:none;transition:border-color .2s}
+.cec-input:focus{border-color:var(--lime)}
+.cec-btn{background:var(--ink);color:#fff;border:none;font-family:var(--fb);font-size:13px;font-weight:600;padding:10px 18px;border-radius:9px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.cec-skip{background:none;border:none;font-family:var(--fb);font-size:13px;color:var(--muted);cursor:pointer;margin-top:10px;display:block;text-align:center}
+.confirm-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 
-.mode-label { font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--subtle);margin-bottom:14px; }
-.mode-grid { display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;margin-bottom:32px; }
-.mode-card { border:1.5px solid var(--border);border-radius:var(--radius);padding:22px 20px;cursor:pointer;transition:all .22s;background:#fff; }
-.mode-card:hover { border-color:var(--border2);box-shadow:var(--shadow); }
-.mode-card.selected { border-color:var(--ink);background:var(--ink); }
-.mode-card.selected .mode-name { color:#fff; }
-.mode-card.selected .mode-time { color:var(--lime); }
-.mode-card.selected .mode-desc { color:rgba(255,255,255,.55); }
-.mode-icon { font-size:24px;margin-bottom:10px; }
-.mode-name { font-size:16px;font-weight:700;color:var(--ink);margin-bottom:4px; }
-.mode-time { font-size:12px;font-weight:600;color:var(--lime);margin-bottom:8px; }
-.mode-desc { font-size:13px;color:var(--muted);line-height:1.5; }
+/* ── Declarations ── */
+.decls-wrap{flex:1;padding:32px 40px 80px;max-width:800px;margin:0 auto;width:100%}
+.decl-item{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:14px;transition:box-shadow .2s}
+.decl-item:hover{box-shadow:var(--shadow)}
+.di-cat{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.di-title{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.di-text{font-size:15px;color:var(--ink2);line-height:1.65;font-style:italic;margin-bottom:12px}
+.di-footer{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.di-date{font-size:12px;color:var(--subtle)}
 
-/* ── DEEP SESSION ── */
-#view-session-deep { background:#fff; }
-.deep-topbar { background:#fff;border-bottom:1px solid var(--border);padding:0 40px;height:48px;display:flex;align-items:center;gap:20px;position:sticky;top:60px;z-index:50; }
-.deep-cat { font-size:13px;font-weight:600;color:var(--muted); }
-.deep-prog-row { display:flex;gap:5px;flex:1;justify-content:center; }
-.deep-step-lbl { font-size:12px;color:var(--subtle);min-width:50px;text-align:right; }
-.sess-body { flex:1;max-width:740px;margin:0 auto;width:100%;padding:48px 32px; }
-.sec-title { font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-.5px;color:var(--ink);line-height:1.15;margin-bottom:24px; }
-.why-para { font-size:16px;color:var(--muted);line-height:1.8;margin-bottom:16px; }
-.couple-sync-note { background:var(--amber-bg);border:1px solid #f0cc80;border-radius:10px;padding:14px 18px;margin-bottom:20px;font-size:13px;color:#8a5a00;line-height:1.5; }
+/* ── Progress ── */
+.progress-wrap{flex:1;padding:32px 40px 80px;max-width:980px;margin:0 auto;width:100%}
+.progress-hero{background:var(--ink);border-radius:20px;padding:32px 36px;margin-bottom:28px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}
+.ph-stat{text-align:center}
+.ph-num{font-size:44px;font-weight:800;color:var(--lime);line-height:1;margin-bottom:5px;letter-spacing:-1px;font-family:var(--fd)}
+.ph-label{font-size:11px;font-weight:700;color:rgba(255,255,255,.45);letter-spacing:.06em;text-transform:uppercase}
+.prog-cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:32px}
+.prog-cat-item{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:16px}
+.pci-emoji{font-size:18px;margin-bottom:6px;display:block}
+.pci-name{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.pci-count{font-size:11px;color:var(--muted);margin-bottom:8px}
+.pci-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.pci-bar-fill{height:100%;background:var(--lime);border-radius:2px;transition:width .5s}
+.pci-complete{color:#4a6b1a;font-size:11px;font-weight:700;margin-top:5px}
+.timeline-list{display:flex;flex-direction:column;gap:8px;margin-bottom:40px}
+.timeline-item{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:14px}
+.timeline-item-icon{width:34px;height:34px;border-radius:8px;background:var(--lime-bg);border:1px solid var(--lime-border);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.timeline-item-body{flex:1;min-width:0}
+.timeline-item-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.timeline-item-sub{font-size:11px;color:var(--muted)}
+.timeline-item-date{font-size:11px;color:var(--subtle);text-align:right;flex-shrink:0}
 
-/* ── FLASH SESSION ── */
-#view-session-flash { background:var(--surface); }
-.flash-wrap { flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 24px;max-width:700px;margin:0 auto;width:100%; }
-.flash-counter { font-size:13px;font-weight:600;color:var(--muted);margin-bottom:28px; }
-.flashcard-scene { width:100%;perspective:1000px;margin-bottom:28px;cursor:pointer; }
-.flashcard { width:100%;min-height:280px;position:relative;transform-style:preserve-3d;transition:transform .5s ease;border-radius:20px; }
-.flashcard.flipped { transform:rotateY(180deg); }
-.fc-face { position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;padding:36px;display:flex;flex-direction:column; }
-.fc-front { background:var(--ink);color:#fff;align-items:center;justify-content:center;text-align:center; }
-.fc-back { background:var(--lime-bg);border:1.5px solid #c8e87a;transform:rotateY(180deg);align-items:flex-start; }
-.fc-tag { font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:20px; }
-.fc-back .fc-tag { color:#4a6b1a; }
-.fc-question { font-size:22px;font-weight:700;color:#fff;line-height:1.4; }
-.fc-hint { font-size:13px;color:rgba(255,255,255,.4);margin-top:auto; }
-.fc-answer-label { font-size:13px;font-weight:700;color:#4a6b1a;margin-bottom:12px; }
-.fc-prompt { font-size:15px;color:var(--ink2);line-height:1.6;font-style:italic; }
-.flash-btns { display:flex;gap:12px;width:100%;justify-content:center; }
-.flash-decl-section { width:100%;margin-top:24px; }
-.flash-decl-block { background:var(--ink);border-radius:var(--radius);padding:32px;margin:20px 0; }
-.fdb-preamble { font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);margin-bottom:14px; }
-.fdb-preamble-big { font-size:22px;font-weight:700;color:var(--lime);font-style:italic;display:block;margin-bottom:8px; }
-.fdb-field { width:100%;font-family:inherit;font-size:17px;font-weight:500;font-style:italic;color:#fff;background:transparent;border:none;border-bottom:1.5px solid rgba(255,255,255,.15);padding:10px 0;resize:none;min-height:90px;line-height:1.7;outline:none;transition:border-color .2s; }
-.fdb-field::placeholder { color:rgba(255,255,255,.2); }
-.fdb-field:focus { border-bottom-color:var(--lime); }
+/* ── Couple ── */
+.couple-wrap-inner{flex:1;max-width:600px;margin:0 auto;width:100%;padding:40px 24px}
+.invite-code-box{background:var(--surface);border:2px dashed var(--border2);border-radius:16px;padding:28px;text-align:center;margin-bottom:20px}
+.invite-code-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.invite-code{font-size:36px;font-weight:800;letter-spacing:7px;color:var(--ink);margin-bottom:12px;font-family:var(--fd)}
+.partner-list{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.partner-row{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 20px;display:flex;align-items:center;gap:12px}
+.partner-avatar{width:38px;height:38px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;font-family:var(--fd)}
+.partner-avatar.partner-b{background:#4a8aff}
+.partner-info{flex:1}
+.partner-name{font-size:14px;font-weight:700;color:var(--ink)}
+.enter-code-section{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px}
 
-/* ── CONFIRM ── */
-#view-confirm { background:#fff; }
-.confirm-body { flex:1;display:flex;flex-direction:column;align-items:center;padding:80px 24px;text-align:center; }
-.confirm-icon { width:72px;height:72px;border-radius:50%;background:var(--lime);font-size:32px;display:flex;align-items:center;justify-content:center;margin-bottom:24px; }
-.confirm-h2 { font-size:36px;font-weight:800;letter-spacing:-.5px;color:var(--ink);margin-bottom:12px; }
-.confirm-sub { font-size:16px;color:var(--muted);line-height:1.6;max-width:440px;margin-bottom:32px; }
-.confirm-decl-card { background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:28px;max-width:540px;width:100%;margin-bottom:32px; }
-.confirm-decl-label { font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);margin-bottom:14px; }
-.confirm-decl-text { font-size:18px;color:var(--ink);line-height:1.65;font-style:italic;font-weight:500; }
-.confirm-btns { display:flex;gap:12px;justify-content:center;flex-wrap:wrap; }
-.confirm-email-capture { background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;max-width:440px;width:100%;margin-bottom:24px; }
-.cec-title { font-size:16px;font-weight:700;margin-bottom:6px; }
-.cec-sub { font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:16px; }
-.cec-row { display:flex;gap:10px; }
-.cec-input { flex:1;font-family:inherit;font-size:14px;color:var(--ink);background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:11px 14px;outline:none;transition:border-color .2s; }
-.cec-input:focus { border-color:var(--lime); }
-.cec-btn { background:var(--ink);color:#fff;border:none;font-family:inherit;font-size:14px;font-weight:600;padding:11px 18px;border-radius:10px;cursor:pointer;white-space:nowrap; }
-.cec-skip { display:block;text-align:center;margin-top:12px;font-size:13px;color:var(--muted);background:none;border:none;font-family:inherit;cursor:pointer;width:100%; }
+/* ── Profile ── */
+.profile-wrap{flex:1;max-width:640px;margin:0 auto;width:100%;padding:32px 24px 80px}
+.profile-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);gap:8px;flex-wrap:wrap}
+.profile-row:last-child{border-bottom:none}
+.profile-row-label{font-size:14px;font-weight:600;color:var(--ink)}
+.profile-row-value{font-size:14px;color:var(--muted)}
 
-/* ── DECLARATIONS ── */
-.decls-wrap { flex:1;padding:32px 40px;max-width:800px;margin:0 auto;width:100%; }
-.decl-item { background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:14px;transition:box-shadow .2s; }
-.decl-item:hover { box-shadow:var(--shadow); }
-.di-cat { font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px; }
-.di-title { font-size:18px;font-weight:700;color:var(--ink);margin-bottom:10px; }
-.di-text { font-size:16px;color:var(--ink2);line-height:1.65;font-style:italic;margin-bottom:12px; }
-.di-footer { display:flex;align-items:center;gap:12px;flex-wrap:wrap; }
-.di-date { font-size:12px;color:var(--subtle); }
-.empty-state { text-align:center;padding:80px 24px; }
-.empty-icon { font-size:48px;margin-bottom:16px; }
-.empty-title { font-size:22px;font-weight:700;color:var(--ink);margin-bottom:8px; }
-.empty-sub { font-size:15px;color:var(--muted); }
+/* PANELS */
+.panel{display:none;flex-direction:column;min-height:calc(100vh - 62px)}
+.panel.active{display:flex}
 
-/* ── PROGRESS ── */
-.progress-wrap { flex:1;padding:32px 40px;max-width:1000px;margin:0 auto;width:100%; }
-.prog-hero { background:var(--ink);border-radius:20px;padding:36px 40px;margin-bottom:28px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px; }
-.ph-stat { text-align:center; }
-.ph-num { font-size:48px;font-weight:800;color:var(--lime);line-height:1;margin-bottom:6px;letter-spacing:-1px; }
-.ph-label { font-size:12px;font-weight:600;color:rgba(255,255,255,.5);letter-spacing:.06em;text-transform:uppercase; }
-.prog-section-title { font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--subtle);margin-bottom:16px;display:flex;align-items:center;gap:10px; }
-.prog-section-title::after { content:'';flex:1;height:1px;background:var(--border); }
-.prog-cat-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:36px; }
-.prog-cat-item { background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:18px; }
-.pci-emoji { font-size:20px;display:block;margin-bottom:8px; }
-.pci-name { font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px; }
-.pci-count { font-size:12px;color:var(--muted);margin-bottom:10px; }
-.pci-bar { height:3px;background:var(--border);border-radius:2px;overflow:hidden; }
-.pci-bar-fill { height:100%;background:var(--lime);border-radius:2px; }
-.pci-complete { color:var(--lime);font-size:12px;font-weight:700;margin-top:6px; }
-.timeline-list { display:flex;flex-direction:column;gap:10px;margin-bottom:40px; }
-.timeline-item { background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:16px; }
-.tl-icon { width:36px;height:36px;border-radius:9px;background:var(--lime-bg);border:1px solid #c8e87a;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0; }
-.tl-body { flex:1;min-width:0; }
-.tl-title { font-size:14px;font-weight:700;color:var(--ink);margin-bottom:2px; }
-.tl-sub { font-size:12px;color:var(--muted); }
-.tl-date { font-size:11px;color:var(--subtle);text-align:right;flex-shrink:0; }
-
-/* ── COUPLE SCREEN ── */
-.couple-wrap { flex:1;display:flex;flex-direction:column;align-items:center;padding:60px 24px;max-width:640px;margin:0 auto;width:100%; }
-.invite-code-box { background:var(--surface);border:2px dashed var(--border2);border-radius:16px;padding:32px;text-align:center;margin:24px 0;width:100%; }
-.icb-label { font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px; }
-.icb-code { font-size:44px;font-weight:800;letter-spacing:8px;color:var(--ink);margin-bottom:14px; }
-.icb-expiry { font-size:12px;color:var(--subtle);margin-bottom:20px; }
-.partner-list { width:100%; }
-.partner-row { background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:18px 20px;display:flex;align-items:center;gap:14px;margin-bottom:10px; }
-.partner-avatar { width:40px;height:40px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0; }
-.partner-b { background:#4a8aff; }
-.partner-info { flex:1; }
-.partner-name { font-size:15px;font-weight:700;color:var(--ink); }
-.partner-email { font-size:12px;color:var(--muted);margin-top:1px; }
-.enter-code-section { width:100%;margin-top:28px; }
-.enter-code-title { font-size:15px;font-weight:700;margin-bottom:14px; }
-
-/* ── PROFILE ── */
-.profile-wrap { flex:1;padding:40px;max-width:680px;margin:0 auto;width:100%; }
-.prof-section-title { font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:16px; }
-.prof-row { display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);gap:12px; }
-.prof-row:last-child { border-bottom:none; }
-.prof-label { font-size:14px;font-weight:600;color:var(--ink); }
-.prof-value { font-size:14px;color:var(--muted);flex:1; }
-
-/* ── NAV TABS ── */
-.lib-tab { margin-left:auto; }
-
-/* ── MOBILE ── */
+/* RESPONSIVE */
 @media(max-width:860px){
-  .lib-wrap,.decls-wrap,.progress-wrap { padding:24px 20px; }
-  .picker-wrap { padding:28px 20px; }
-  .profile-wrap { padding:24px 20px; }
-  .deep-topbar { padding:0 20px; }
-  .sess-body { padding:36px 20px; }
+  .library-wrap,.decls-wrap,.progress-wrap{padding:24px 20px 60px}
+  .sess-topbar{padding:0 20px}
+  .sess-body{padding:32px 20px 80px}
+  .progress-hero{padding:24px;gap:16px}
+  .ph-num{font-size:34px}
 }
 @media(max-width:600px){
-  .lib-wrap,.decls-wrap,.progress-wrap { padding:16px 14px 84px; }
-  .profile-wrap { padding:16px 14px 84px; }
-  .picker-wrap { padding:20px 14px; }
-  .cat-grid { grid-template-columns:1fr 1fr;gap:10px; }
-  .cat-card { padding:16px 12px; }
-  .cat-name { font-size:13px; }
-  .mode-grid { grid-template-columns:1fr; }
-  .deep-topbar { padding:0 14px;top:54px;height:44px; }
-  .deep-cat { display:none; }
-  .sess-body { padding:24px 14px 88px; }
-  .sec-title { font-size:22px; }
-  .prog-hero { padding:20px;gap:8px; }
-  .ph-num { font-size:30px; }
-  .ph-label { font-size:9px; }
-  .prog-cat-grid { grid-template-columns:1fr 1fr;gap:8px; }
-  .timeline-item { padding:12px 14px;gap:10px; }
-  .confirm-body { padding:40px 16px; }
-  .confirm-h2 { font-size:26px; }
-  .confirm-btns { flex-direction:column; }
-  .cec-row { flex-direction:column; }
-  .couple-wrap { padding:28px 14px; }
-  .icb-code { font-size:32px;letter-spacing:4px; }
-  .decl-item { padding:18px 14px; }
-  .di-text { font-size:14px; }
-  .flash-wrap { padding:20px 14px; }
-  .flashcard { min-height:220px; }
-  .fc-face { padding:24px 18px; }
-  .fc-question { font-size:18px; }
-  .flash-btns { gap:8px; }
+  .library-wrap,.decls-wrap,.progress-wrap{padding:20px 14px 84px}
+  .profile-wrap,.couple-wrap-inner{padding:20px 14px 84px}
+  .cat-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .cat-card{padding:14px 12px}
+  .cat-name{font-size:13px}
+  .rec-path{gap:8px}
+  .picker-wrap{padding:24px 14px}
+  .mode-grid{grid-template-columns:1fr;gap:10px}
+  .sess-topbar{padding:0 14px;height:44px;top:54px}
+  .sess-cat{display:none}
+  .sp-seg{width:22px}
+  .sess-step-label{font-size:10px;min-width:auto}
+  .sess-body{padding:24px 14px 100px}
+  .sec-title{font-size:22px}
+  .prayer-block{padding:22px 18px}
+  .prayer-text{font-size:16px}
+  .decl-wrap{padding:22px 18px}
+  .sess-nav{gap:8px;flex-wrap:nowrap}
+  .btn-back-sess{padding:10px 14px;font-size:13px}
+  .btn-next-sess,.btn-finish-sess{padding:10px 18px;font-size:13px}
+  .confirm-body{padding:36px 14px}
+  .confirm-h2{font-size:22px}
+  .cec-row{flex-direction:column}
+  .cec-input,.cec-btn{width:100%;border-radius:9px}
+  .confirm-btns{flex-direction:column;width:100%}
+  .confirm-btns .btn{width:100%;justify-content:center}
+  .flash-wrap{padding:20px 14px}
+  .flashcard{min-height:220px}
+  .fc-face{padding:22px 16px}
+  .fc-question{font-size:17px}
+  .flash-controls{gap:8px}
+  .flash-btn{padding:10px 14px;font-size:13px}
+  .progress-hero{grid-template-columns:1fr 1fr 1fr;padding:18px;gap:8px}
+  .ph-num{font-size:26px}
+  .ph-label{font-size:9px}
+  .prog-cat-grid{grid-template-columns:1fr 1fr;gap:8px}
 }
 </style>
 </head>
 <body>
 
-<!-- TOP NAV -->
-<nav class="top-nav" id="top-nav">
+<!-- NAV -->
+<nav class="top-nav">
   <a class="nav-logo" href="index.html"><div class="nav-logo-dot"></div>OneAccord</a>
-
-  <!-- Library tabs (shown on lib views) -->
-  <div class="nav-tabs" id="nav-lib-tabs">
-    <button class="nav-tab active" data-tab="library"     onclick="showView('library')">Sessions</button>
-    <button class="nav-tab"        data-tab="declarations" onclick="showView('declarations')">Declarations</button>
-    <button class="nav-tab"        data-tab="progress"    onclick="showView('progress')">Progress</button>
-  </div>
-
-  <!-- Session back (shown in session views) -->
-  <button class="nav-back" id="nav-back" style="display:none" onclick="goBackFromSession()">← Exit</button>
-
-  <div class="nav-user" id="nav-user">
-    <span class="nav-user-name" id="nav-name"></span>
-    <button class="nav-profile-btn" id="nav-initial" onclick="showView('profile')"></button>
-  </div>
+  <span class="nav-spacer"></span>
+  <button class="nav-link-btn" onclick="showPanelTab('couple')">👫 Couple Sync</button>
+  <div id="nav-user-area"></div>
 </nav>
 
-<!-- ══ LIBRARY VIEW ══ -->
-<div class="view" id="view-library" style="display:flex;flex-direction:column">
-  <div class="lib-wrap">
+<!-- PANELS CONTAINER -->
+
+<!-- Panel: Library -->
+<div class="panel active" id="panel-library">
+  <div class="library-wrap">
     <div class="lib-top">
-      <span class="stage-pill" id="stage-pill">🕊️ Married</span>
-      <span class="other-stages">Also: <a href="dating.html">🌱 Dating</a> · <a href="engaged.html">💍 Engaged</a></span>
+      <div class="stage-pill">🕊️ Married</div>
+      <span style="font-size:13px;color:var(--muted);margin-left:4px">Going deeper together</span>
     </div>
-    <div class="couple-banner" id="couple-banner" style="display:none">
-      <div class="cb-icon">🔗</div>
-      <div class="cb-text">
-        <div class="cb-title">Connected with <span class="cb-name"></span></div>
-        <div class="cb-sub">Couple Space active — sessions now track both of you.</div>
+
+    <div class="couple-bar" id="couple-connected-bar" style="display:none">
+      <div class="couple-bar-icon">🔗</div>
+      <div class="couple-bar-text">
+        <div class="couple-bar-title">Couple Space active</div>
+        <div class="couple-bar-sub">Sessions now track both partners.</div>
       </div>
-      <button class="btn-ghost" style="padding:8px 14px;font-size:13px" onclick="showView('couple')">Manage</button>
+      <button class="btn btn-dark btn-sm btn" onclick="showPanelTab('couple')">Manage</button>
     </div>
-    <div class="connect-cta" id="connect-cta" onclick="showView('couple')" style="display:none">
-      <div class="connect-cta-icon">🔗</div>
-      <div class="connect-cta-text">
-        <div class="connect-cta-title">Connect with your partner</div>
-        <div class="connect-cta-sub">Link two accounts so you can both engage sessions independently.</div>
+    <div class="connect-cta" id="couple-connect-cta" onclick="showPanelTab('couple')" style="display:none">
+      <div style="font-size:20px">🔗</div>
+      <div style="flex:1">
+        <div style="font-size:14px;font-weight:700;margin-bottom:2px">Connect with your partner</div>
+        <div style="font-size:12px;color:var(--muted)">Link two accounts into one shared Couple Space.</div>
       </div>
-      <div class="connect-cta-arrow">→</div>
+      <div style="color:var(--muted)">→</div>
     </div>
+
     <div class="rec-section">
-      <div class="rec-heading">Recommended path</div>
+      <div class="rec-heading">Recommended for Married</div>
       <div class="rec-path" id="rec-path"></div>
     </div>
     <div class="all-cats-heading">All categories</div>
     <div class="cat-grid" id="cat-grid"></div>
   </div>
+
+  <!-- Mobile bottom tabs -->
+  <div id="mob-tabs">
+    <button class="mob-tab on" data-panel="sessions">
+      <span class="mob-tab-icon">📚</span><span class="mob-tab-label">Sessions</span>
+    </button>
+    <button class="mob-tab" data-panel="archive">
+      <span class="mob-tab-icon">✦</span><span class="mob-tab-label">Archive</span>
+    </button>
+    <button class="mob-tab" data-panel="progress">
+      <span class="mob-tab-icon">📈</span><span class="mob-tab-label">Progress</span>
+    </button>
+  </div>
 </div>
 
-<!-- ══ SESSION PICKER VIEW ══ -->
-<div class="view" id="view-session-picker" style="display:none">
+<!-- Panel: Picker -->
+<div class="panel" id="panel-picker">
+  <nav class="top-nav" style="position:relative">
+    <a class="nav-logo" href="index.html"><div class="nav-logo-dot"></div>OneAccord</a>
+    <span id="picker-cat-label" style="font-size:13px;font-weight:600;color:var(--muted)"></span>
+    <span class="nav-spacer"></span>
+    <button class="nav-back" onclick="showPanel('library')">← Back</button>
+  </nav>
   <div class="picker-wrap">
-    <div style="text-align:center;margin-bottom:8px;font-size:28px" id="pick-cat-emoji"></div>
-    <h1 class="page-h1" style="text-align:center" id="pick-cat-name"></h1>
-    <p class="page-sub" style="text-align:center" id="pick-cat-desc"></p>
-    <div class="sess-list" id="sess-list"></div>
+    <div class="page-eyebrow" style="text-align:center">Choose a Session</div>
+    <h1 id="picker-cat-name" class="page-h1" style="text-align:center;margin-bottom:6px"></h1>
+    <p id="picker-cat-desc" class="page-sub" style="text-align:center;margin-bottom:24px"></p>
+    <div id="attempts-panel-wrap" style="width:100%;display:none"></div>
+    <div class="session-list" id="sess-list"></div>
     <div class="mode-label">Choose your mode</div>
     <div class="mode-grid">
       <div class="mode-card" id="mode-deep" onclick="selectMode('deep',this)">
@@ -323,25 +395,21 @@
         <div class="mode-desc">Quick-fire questions to spark conversation. Best for revisiting or when time is short.</div>
       </div>
     </div>
-    <button class="btn-dark" id="begin-btn" style="width:100%;opacity:.35;pointer-events:none" onclick="beginSession()">Begin Session →</button>
+    <button class="btn btn-dark btn-full btn" id="begin-btn" disabled onclick="beginSession()">Begin Session →</button>
   </div>
 </div>
 
-<!-- ══ DEEP SESSION VIEW ══ -->
-<div class="view" id="view-session-deep" style="display:none">
-  <div class="deep-topbar">
-    <span class="deep-cat" id="deep-cat-label"></span>
-    <div class="deep-prog-row seg-row" id="deep-prog"></div>
-    <span class="deep-step-lbl" id="deep-step-label"></span>
-  </div>
-  <div id="deep-body" style="flex:1;overflow-y:auto"></div>
-</div>
-
-<!-- ══ FLASH SESSION VIEW ══ -->
-<div class="view" id="view-session-flash" style="display:none">
+<!-- Panel: Flash Session -->
+<div class="panel" id="panel-flash">
+  <nav class="top-nav" style="position:relative">
+    <a class="nav-logo" href="index.html"><div class="nav-logo-dot"></div>OneAccord</a>
+    <span id="flash-cat-label" style="font-size:13px;font-weight:600;color:var(--muted)"></span>
+    <span class="nav-spacer"></span>
+    <button class="nav-back" onclick="showPanel('picker')">← Exit</button>
+  </nav>
   <div class="flash-wrap">
-    <div class="seg-row" id="flash-prog" style="width:100%;margin-bottom:24px"></div>
-    <div class="flash-counter" id="flash-counter">Card 1</div>
+    <div class="flash-progress" id="flash-progress"></div>
+    <div class="flash-counter" id="flash-counter">Card 1 of 8</div>
     <div class="flashcard-scene" onclick="flipCard()">
       <div class="flashcard" id="flashcard">
         <div class="fc-face fc-front">
@@ -356,24 +424,43 @@
         </div>
       </div>
     </div>
-    <div class="flash-btns">
-      <button class="btn-ghost" onclick="flashPrev()">← Prev</button>
-      <button class="btn-dark" id="flash-next-btn" onclick="flashNext()">Next Card →</button>
+    <div class="flash-controls">
+      <button class="flash-btn" onclick="flashPrev()">← Prev</button>
+      <button class="flash-btn flash-btn-next" id="flash-next-btn" onclick="flashNext()">Next →</button>
     </div>
     <div id="flash-decl-section" style="display:none;width:100%">
-      <div class="flash-decl-block">
-        <div class="fdb-preamble">✦ Write Your Declaration</div>
-        <p style="font-size:14px;color:rgba(255,255,255,.55);margin-bottom:14px;line-height:1.6">Based on your conversation — what do you agree on?</p>
-        <span class="fdb-preamble-big">We agree that…</span>
-        <textarea class="fdb-field" id="flash-decl-input" placeholder="…write your shared declaration here. Or leave blank and we'll craft one."></textarea>
+      <div class="flash-decl-wrap">
+        <div class="flash-decl-preamble">✦ Write Your Declaration</div>
+        <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:12px;line-height:1.6">Based on your conversation — what do you agree on?</p>
+        <span class="flash-decl-starter">We agree that…</span>
+        <textarea class="flash-decl-field" id="flash-decl-input" placeholder="…write your shared declaration here."></textarea>
+        <p class="flash-decl-hint">Or leave blank and let AI draft one from your conversation.</p>
       </div>
-      <button class="btn-lime" style="width:100%;margin-top:16px" onclick="sealFlashDeclaration()">Seal This Declaration ✦</button>
+      <button class="btn btn-lime btn-full btn flash-seal-btn" style="margin-top:16px" onclick="saveFlashDeclaration()">Seal Declaration ✓</button>
     </div>
   </div>
 </div>
 
-<!-- ══ CONFIRM VIEW ══ -->
-<div class="view" id="view-confirm" style="display:none">
+<!-- Panel: Deep Session -->
+<div class="panel" id="panel-session">
+  <nav class="top-nav" style="position:relative">
+    <a class="nav-logo" href="index.html"><div class="nav-logo-dot"></div>OneAccord</a>
+    <span id="sess-cat-label" class="sess-cat"></span>
+    <span class="nav-spacer"></span>
+    <button class="nav-back" onclick="showPanel('picker')">← Exit</button>
+  </nav>
+  <div class="sess-topbar">
+    <div class="sess-prog" id="sess-prog"></div>
+    <div class="sess-step-label" id="sess-step-label"></div>
+  </div>
+  <div class="sess-body" id="sess-body"></div>
+</div>
+
+<!-- Panel: Confirm -->
+<div class="panel" id="panel-confirm">
+  <nav class="top-nav" style="position:relative">
+    <a class="nav-logo" href="index.html"><div class="nav-logo-dot"></div>OneAccord</a>
+  </nav>
   <div class="confirm-body">
     <div class="confirm-icon">✦</div>
     <h2 class="confirm-h2">Declaration sealed.</h2>
@@ -383,118 +470,134 @@
       <div class="confirm-decl-text" id="confirm-text"></div>
     </div>
     <div class="confirm-email-capture" id="confirm-email-capture" style="display:none">
-      <div class="cec-title">Save your declaration?</div>
-      <div class="cec-sub">This is the first entry in your shared archive. Enter your email to save it permanently.</div>
+      <div class="cec-title">Save this declaration.</div>
+      <div class="cec-sub">Create a free account to preserve your declarations across sessions and devices.</div>
       <div class="cec-row">
-        <input class="cec-input" type="email" id="confirm-email-inp" placeholder="your@email.com">
-        <button class="cec-btn" onclick="saveConfirmEmail()">Save →</button>
+        <input class="cec-input" type="email" id="confirm-email-input" placeholder="your@email.com">
+        <button class="cec-btn" onclick="saveEmailFromConfirm()">Save →</button>
       </div>
-      <button class="cec-skip" onclick="document.getElementById('confirm-email-capture').style.display='none'">Skip</button>
+      <button class="cec-skip" onclick="document.getElementById('confirm-email-capture').style.display='none'">Skip for now</button>
     </div>
     <div class="confirm-btns">
-      <button class="btn-dark" onclick="showView('library')">Back to Sessions</button>
-      <button class="btn-outline" onclick="showView('declarations')">View All Declarations</button>
+      <button class="btn btn-dark btn" onclick="showPanel('library')">Back to Library</button>
+      <button class="btn btn-outline btn" onclick="showDeclTab()">View Declarations</button>
     </div>
   </div>
 </div>
 
-<!-- ══ DECLARATIONS VIEW ══ -->
-<div class="view" id="view-declarations" style="display:none">
+<!-- Panel: Declarations -->
+<div class="panel" id="panel-declarations">
+  <div style="position:relative">
+    <nav class="top-nav" style="position:relative">
+      <a class="nav-logo" href="index.html"><div class="nav-logo-dot"></div>OneAccord</a>
+      <span class="nav-spacer"></span>
+      <div id="nav-user-area-decl"></div>
+    </nav>
+  </div>
   <div class="decls-wrap">
-    <div class="lib-top" style="margin-bottom:24px"><h2 style="font-size:24px;font-weight:800;letter-spacing:-.5px">Your Declarations</h2></div>
+    <div style="margin-bottom:24px"><h2 style="font-family:var(--fd);font-size:22px;font-weight:800;letter-spacing:-.5px">Your Declarations</h2></div>
     <div id="decls-list"></div>
   </div>
-</div>
-
-<!-- ══ PROGRESS VIEW ══ -->
-<div class="view" id="view-progress" style="display:none">
-  <div class="progress-wrap" id="progress-wrap"></div>
-</div>
-
-<!-- ══ COUPLE SYNC VIEW ══ -->
-<div class="view" id="view-couple" style="display:none">
-  <div class="couple-wrap">
-    <div class="page-eyebrow">Couple Sync</div>
-    <h1 class="page-h1" style="text-align:center">Connect with your partner.</h1>
-    <p class="page-sub" style="text-align:center">Link two OneAccord accounts. Each partner uses their own device.</p>
-    <div id="couple-content" style="width:100%"></div>
-    <div class="enter-code-section" id="enter-code-section" style="display:none">
-      <div class="enter-code-title">Have an invite code from your partner?</div>
-      <div style="display:flex;gap:10px">
-        <input class="field" type="text" id="enter-code-input" placeholder="ABC123" maxlength="6"
-          style="letter-spacing:4px;font-size:18px;font-weight:700;text-transform:uppercase;text-align:center">
-        <button class="btn-dark" style="white-space:nowrap" onclick="submitInviteCode()">Join →</button>
-      </div>
-    </div>
+  <div id="mob-tabs" style="display:none">
+    <button class="mob-tab" data-panel="sessions">
+      <span class="mob-tab-icon">📚</span><span class="mob-tab-label">Sessions</span>
+    </button>
+    <button class="mob-tab on" data-panel="archive">
+      <span class="mob-tab-icon">✦</span><span class="mob-tab-label">Archive</span>
+    </button>
+    <button class="mob-tab" data-panel="progress">
+      <span class="mob-tab-icon">📈</span><span class="mob-tab-label">Progress</span>
+    </button>
   </div>
 </div>
 
-<!-- ══ PROFILE VIEW ══ -->
-<div class="view" id="view-profile" style="display:none">
+<!-- Panel: Progress -->
+<div class="panel" id="panel-progress">
+  <nav class="top-nav" style="position:relative">
+    <a class="nav-logo" href="index.html"><div class="nav-logo-dot"></div>OneAccord</a>
+    <span class="nav-spacer"></span>
+    <div id="nav-user-area-prog"></div>
+  </nav>
+  <div class="progress-wrap" id="progress-wrap"></div>
+  <div id="mob-tabs" style="display:none">
+    <button class="mob-tab" data-panel="sessions">
+      <span class="mob-tab-icon">📚</span><span class="mob-tab-label">Sessions</span>
+    </button>
+    <button class="mob-tab" data-panel="archive">
+      <span class="mob-tab-icon">✦</span><span class="mob-tab-label">Archive</span>
+    </button>
+    <button class="mob-tab on" data-panel="progress">
+      <span class="mob-tab-icon">📈</span><span class="mob-tab-label">Progress</span>
+    </button>
+  </div>
+</div>
+
+<!-- Panel: Couple Sync -->
+<div class="panel" id="panel-couple">
+  <nav class="top-nav" style="position:relative">
+    <a class="nav-logo" href="index.html"><div class="nav-logo-dot"></div>OneAccord</a>
+    <span style="font-size:13px;font-weight:600;color:var(--muted)">Couple Space</span>
+    <span class="nav-spacer"></span>
+    <button class="nav-back" onclick="showPanel('library')">← Back</button>
+  </nav>
+  <div class="couple-wrap-inner">
+    <div class="page-eyebrow" style="text-align:center">Couple Sync</div>
+    <h1 class="page-h1" style="text-align:center;font-size:28px">Connect with your partner.</h1>
+    <p class="page-sub" style="text-align:center;margin-bottom:24px;font-size:14px">Link two OneAccord accounts. Each partner uses their own device and account.</p>
+    <div id="couple-wrap"></div>
+  </div>
+</div>
+
+<!-- Panel: Profile -->
+<div class="panel" id="panel-profile">
+  <nav class="top-nav" style="position:relative">
+    <a class="nav-logo" href="index.html"><div class="nav-logo-dot"></div>OneAccord</a>
+    <span style="font-size:13px;font-weight:600;color:var(--muted)">Profile</span>
+    <span class="nav-spacer"></span>
+    <button class="nav-back" onclick="showPanel('library')">← Back</button>
+  </nav>
   <div class="profile-wrap" id="profile-wrap"></div>
 </div>
 
-<!-- Mobile Bottom Nav -->
-<div class="mob-nav" id="mob-nav" style="display:none">
-  <button class="mob-nav-item active" data-tab="sessions"    onclick="showView('library')">
-    <span class="mob-nav-icon">📚</span><span class="mob-nav-label">Sessions</span>
-  </button>
-  <button class="mob-nav-item" data-tab="archive"    onclick="showView('declarations')">
-    <span class="mob-nav-icon">✦</span><span class="mob-nav-label">Archive</span>
-  </button>
-  <button class="mob-nav-item" data-tab="progress"   onclick="showView('progress')">
-    <span class="mob-nav-icon">📈</span><span class="mob-nav-label">Progress</span>
-  </button>
-</div>
-
-<script src="shared.js"></script>
-<script src="stage-app.js"></script>
+<!-- Data + Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// Stage-specific constant
-const CURRENT_STAGE = 'married';
+// ── Supabase config — replace with your credentials ──
+const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
+const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
+</script>
+<script src="data.js"></script>
+<script src="session-app.js"></script>
+<script>
+// ── Page-level init ──
+const PAGE_STAGE = 'married';
 
-// If user has no stage or different stage, set this one
-if (!S.stage) S.setStage(CURRENT_STAGE);
+function showPanelTab(name) {
+  if (name === 'couple') { showPanel('couple'); buildCouplePanel(); return; }
+  if (name === 'profile') { showPanel('profile'); buildProfile(); return; }
+  showPanel(name);
+}
 
-// Init
-window.addEventListener('load', () => {
-  // Nav user info
-  const nameEl = document.getElementById('nav-name');
-  const initEl = document.getElementById('nav-initial');
-  if (nameEl) nameEl.textContent = S.userName || (S.email ? S.email.split('@')[0] : '');
-  if (initEl) initEl.textContent = (S.userName || S.email || '?').charAt(0).toUpperCase();
+function showDeclTab() {
+  renderDeclarations();
+  showPanel('declarations');
+}
 
-  // Show library
-  showView('library');
+function saveEmailFromConfirm() {
+  const email = document.getElementById('confirm-email-input')?.value?.trim();
+  if (!email || !email.includes('@')) { toast('Please enter a valid email.'); return; }
+  sessionStorage.setItem('oa_redirect', window.location.pathname);
+  window.location.href = 'signin.html?pre=' + encodeURIComponent(email);
+}
+
+// Boot
+const _sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+appInit(PAGE_STAGE, _sb).then(() => {
+  // Profile button handler
+  document.querySelectorAll('#nav-user-area').forEach(el => {
+    // updateNavUser already handles this
+  });
 });
-
-// Nav tab active state sync
-function syncNavTabs(view) {
-  document.querySelectorAll('#nav-lib-tabs .nav-tab').forEach(tab => {
-    tab.classList.toggle('active', tab.dataset.tab === view);
-  });
-  const libTabs = document.getElementById('nav-lib-tabs');
-  const backBtn = document.getElementById('nav-back');
-  const isSession = ['session-deep','session-flash','confirm'].includes(view);
-  if (libTabs) libTabs.style.display = isSession ? 'none' : 'flex';
-  if (backBtn) backBtn.style.display = isSession ? 'flex' : 'none';
-  // also sync mob nav tab active
-  document.querySelectorAll('.mob-nav-item').forEach(el => {
-    const tabMap = { library:'sessions', declarations:'archive', progress:'progress' };
-    el.classList.toggle('active', el.dataset.tab === tabMap[view]);
-  });
-}
-
-// Patch showView to also sync nav tabs
-const _showView = showView;
-function showView(name) {
-  _showView(name);
-  syncNavTabs(name);
-}
-
-function goBackFromSession() {
-  showView('session-picker');
-}
 </script>
 </body>
 </html>

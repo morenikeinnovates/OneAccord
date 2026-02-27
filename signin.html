@@ -5,168 +5,313 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sign In — OneAccord</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="stylesheet" href="shared.css">
 <style>
-body { background:var(--surface); }
-.auth-page { min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px; }
-.auth-back { position:fixed;top:20px;left:20px; }
-.auth-back a { font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid var(--border);border-radius:8px;background:#fff;transition:all .2s; }
-.auth-back a:hover { color:var(--ink);border-color:var(--ink); }
-.auth-box { width:100%;max-width:420px;background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:40px;box-shadow:var(--shadow2);animation:fadeUp .4s ease; }
-.auth-logo { display:flex;align-items:center;gap:8px;font-size:18px;font-weight:700;color:var(--ink);margin-bottom:32px;text-decoration:none; }
-.auth-logo-dot { width:8px;height:8px;border-radius:50%;background:var(--lime); }
-.auth-h2 { font-size:24px;font-weight:800;letter-spacing:-.5px;color:var(--ink);margin-bottom:8px; }
-.auth-sub { font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:28px; }
-.auth-label { font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:block; }
-.auth-input { width:100%;font-family:inherit;font-size:16px;color:var(--ink);background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:13px 16px;transition:border-color .2s;outline:none;margin-bottom:16px; }
-.auth-input:focus { border-color:var(--lime); }
-.auth-btn { width:100%;background:var(--ink);color:#fff;border:none;font-family:inherit;font-size:15px;font-weight:600;padding:14px;border-radius:10px;cursor:pointer;transition:all .2s; }
-.auth-btn:hover { background:var(--ink2); }
-.auth-btn:disabled { opacity:.5;cursor:not-allowed; }
-.auth-skip { text-align:center;margin-top:16px;font-size:13px;color:var(--muted); }
-.auth-skip a { color:var(--muted);text-decoration:underline;cursor:pointer; }
-
-/* OTP step */
-.otp-inputs { display:flex;gap:10px;margin-bottom:20px; }
-.otp-digit { width:52px;height:60px;text-align:center;font-family:inherit;font-size:24px;font-weight:700;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);outline:none;color:var(--ink);transition:border-color .2s; }
-.otp-digit:focus { border-color:var(--lime); }
-.auth-email-shown { background:var(--lime-bg);border:1px solid #c8e87a;border-radius:8px;padding:10px 14px;font-size:14px;font-weight:600;color:#4a6b1a;margin-bottom:20px; }
-.auth-demo-note { background:var(--amber-bg);border:1px solid #f0cc80;border-radius:8px;padding:10px 14px;font-size:12px;color:#8a5a00;margin-bottom:16px;line-height:1.5; }
-.auth-resend { font-size:13px;color:var(--muted);text-align:center;margin-top:12px; }
-.auth-resend button { color:var(--ink);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:inherit;font-size:13px; }
-
-@media(max-width:600px){
-  .auth-box { padding:28px 20px;border-radius:16px; }
-  .auth-h2 { font-size:20px; }
-  .otp-inputs { gap:6px; }
-  .otp-digit { width:42px;height:52px;font-size:20px; }
+body{background:var(--surface);display:flex;flex-direction:column;min-height:100vh}
+.signin-wrap{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  padding:40px 20px;
 }
+.signin-box{
+  background:#fff;border:1.5px solid var(--border);border-radius:24px;
+  padding:44px 40px;width:100%;max-width:420px;
+  box-shadow:var(--shadow2);animation:fadeUp .4s ease;
+}
+.signin-logo{
+  display:flex;align-items:center;gap:8px;margin-bottom:32px;
+  font-family:var(--fd);font-size:18px;font-weight:800;color:var(--ink);
+  cursor:pointer;text-decoration:none;
+}
+.signin-logo-dot{width:9px;height:9px;border-radius:50%;background:var(--lime)}
+.signin-h2{font-family:var(--fd);font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+.signin-sub{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:28px}
+
+/* OTP inputs */
+.otp-row{display:flex;gap:8px;margin-bottom:20px}
+.otp-digit{
+  flex:1;height:58px;text-align:center;
+  font-family:var(--fd);font-size:24px;font-weight:700;
+  color:var(--ink);background:var(--surface);
+  border:1.5px solid var(--border);border-radius:10px;
+  outline:none;transition:border-color .2s;
+  -webkit-appearance:none;
+}
+.otp-digit:focus{border-color:var(--lime);background:#fff}
+
+.email-shown{
+  background:var(--lime-bg);border:1px solid var(--lime-border);
+  border-radius:8px;padding:10px 14px;
+  font-size:14px;font-weight:600;color:#4a6b1a;margin-bottom:20px;
+}
+.resend-row{font-size:13px;color:var(--muted);text-align:center;margin-top:14px}
+.resend-btn{
+  background:none;border:none;color:var(--ink);cursor:pointer;
+  font-family:var(--fb);font-size:13px;text-decoration:underline;
+}
+.back-link{
+  background:none;border:none;color:var(--muted);cursor:pointer;
+  font-family:var(--fb);font-size:13px;margin-top:10px;
+  display:block;text-align:center;transition:color .2s;
+}
+.back-link:hover{color:var(--ink)}
+.skip-link{
+  text-align:center;margin-top:16px;
+  font-size:13px;color:var(--muted);
+}
+.skip-btn{
+  background:none;border:none;color:var(--muted);cursor:pointer;
+  font-family:var(--fb);font-size:13px;text-decoration:underline;
+}
+.skip-btn:hover{color:var(--ink)}
+
+/* Step panels */
+.step{display:none}
+.step.active{display:block;animation:fadeIn .25s ease}
 </style>
 </head>
 <body>
 
-<div class="auth-back">
-  <a href="index.html">← Back</a>
-</div>
+<!-- NAV -->
+<nav class="top-nav">
+  <a class="nav-logo" href="index.html"><div class="nav-logo-dot"></div>OneAccord</a>
+</nav>
 
-<div class="auth-page">
+<div class="signin-wrap">
+  <div class="signin-box">
+    <a class="signin-logo" href="index.html">
+      <div class="signin-logo-dot"></div>OneAccord
+    </a>
 
-  <!-- Step 1: Email Entry -->
-  <div class="auth-box" id="step-email">
-    <a class="auth-logo" href="index.html"><div class="auth-logo-dot"></div>OneAccord</a>
-    <h2 class="auth-h2" id="auth-h2">Welcome back.</h2>
-    <p class="auth-sub" id="auth-sub">Enter your email to sign in — no password needed. We'll send you a 6-digit code.</p>
-    <label class="auth-label">Email address</label>
-    <input class="auth-input" type="email" id="email-input" placeholder="you@example.com" autocomplete="email">
-    <button class="auth-btn" id="send-btn" onclick="sendCode()">Send Code →</button>
-    <p class="auth-skip">No account? <a onclick="navigate('onboarding.html')">Start without one</a></p>
-  </div>
+    <!-- Step 1: Email entry -->
+    <div class="step active" id="step-email">
+      <h2 class="signin-h2" id="auth-heading">Welcome back.</h2>
+      <p class="signin-sub" id="auth-subtext">Enter your email — no password needed. We'll send you a 6-digit code.</p>
 
-  <!-- Step 2: OTP Entry (hidden initially) -->
-  <div class="auth-box" id="step-otp" style="display:none">
-    <a class="auth-logo" href="index.html"><div class="auth-logo-dot"></div>OneAccord</a>
-    <h2 class="auth-h2">Check your email.</h2>
-    <p class="auth-sub">We sent a 6-digit code to:</p>
-    <div class="auth-email-shown" id="otp-email-label">—</div>
-    <div class="auth-demo-note">🧪 <strong>Demo mode:</strong> Use code <strong>123456</strong> to sign in.</div>
-    <label class="auth-label">Enter code</label>
-    <div class="otp-inputs">
-      <input class="otp-digit" maxlength="1" id="d0" inputmode="numeric">
-      <input class="otp-digit" maxlength="1" id="d1" inputmode="numeric">
-      <input class="otp-digit" maxlength="1" id="d2" inputmode="numeric">
-      <input class="otp-digit" maxlength="1" id="d3" inputmode="numeric">
-      <input class="otp-digit" maxlength="1" id="d4" inputmode="numeric">
-      <input class="otp-digit" maxlength="1" id="d5" inputmode="numeric">
+      <label class="field-label" for="email-input">Email address</label>
+      <input
+        class="field-input" type="email" id="email-input"
+        placeholder="you@example.com" autocomplete="email"
+        style="margin-bottom:16px"
+        onkeydown="if(event.key==='Enter')sendCode()"
+      >
+      <div id="email-error" style="display:none;color:#cc4444;font-size:13px;margin-bottom:12px"></div>
+
+      <button class="btn btn-dark btn-full" id="send-btn" onclick="sendCode()">
+        Send Code →
+      </button>
+      <p class="skip-link">
+        No account yet? 
+        <button class="skip-btn" onclick="goStage()">Start without one</button>
+      </p>
     </div>
-    <button class="auth-btn" id="verify-btn" onclick="verifyCode()">Verify & Sign In →</button>
-    <p class="auth-resend">Didn't get it? <button onclick="sendCode()">Send again</button></p>
-    <p class="auth-skip" style="margin-top:8px;"><a onclick="showEmailStep()">← Change email</a></p>
-  </div>
 
+    <!-- Step 2: OTP entry -->
+    <div class="step" id="step-otp">
+      <h2 class="signin-h2">Check your email.</h2>
+      <p class="signin-sub" style="margin-bottom:14px">We sent a 6-digit code to:</p>
+      <div class="email-shown" id="otp-email-shown">—</div>
+
+      <label class="field-label">Enter code</label>
+      <div class="otp-row">
+        <input class="otp-digit" maxlength="1" id="d0" inputmode="numeric" oninput="otpIn(0)" onkeydown="otpKey(event,0)">
+        <input class="otp-digit" maxlength="1" id="d1" inputmode="numeric" oninput="otpIn(1)" onkeydown="otpKey(event,1)">
+        <input class="otp-digit" maxlength="1" id="d2" inputmode="numeric" oninput="otpIn(2)" onkeydown="otpKey(event,2)">
+        <input class="otp-digit" maxlength="1" id="d3" inputmode="numeric" oninput="otpIn(3)" onkeydown="otpKey(event,3)">
+        <input class="otp-digit" maxlength="1" id="d4" inputmode="numeric" oninput="otpIn(4)" onkeydown="otpKey(event,4)">
+        <input class="otp-digit" maxlength="1" id="d5" inputmode="numeric" oninput="otpIn(5)" onkeydown="otpKey(event,5)">
+      </div>
+      <div id="otp-error" style="display:none;color:#cc4444;font-size:13px;margin-bottom:12px"></div>
+
+      <button class="btn btn-dark btn-full" id="verify-btn" onclick="verifyCode()">
+        Verify & Sign In →
+      </button>
+
+      <div class="resend-row">
+        Didn't get it?
+        <button class="resend-btn" onclick="resendCode()">Send again</button>
+      </div>
+      <button class="back-link" onclick="backToEmail()">← Change email</button>
+    </div>
+
+    <!-- Step 3: Success -->
+    <div class="step" id="step-success">
+      <div style="text-align:center;padding:20px 0">
+        <div style="font-size:48px;margin-bottom:16px">✓</div>
+        <h2 class="signin-h2" style="text-align:center">Signed in!</h2>
+        <p style="font-size:14px;color:var(--muted);margin-top:6px">Redirecting you now…</p>
+      </div>
+    </div>
+  </div>
 </div>
 
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="shared.js"></script>
 <script>
-let pendingEmail = '';
-let otpCode = '';
+// ── Config — replace with your values ──
+const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
+const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Redirect if already signed in
-if (S.email) {
-  const dest = S.stage ? S.stage + '.html' : 'onboarding.html';
-  window.location.href = dest;
+let pendingEmail = '';
+
+// ── Check if already signed in ──
+sb.auth.getSession().then(({ data }) => {
+  if (data?.session) {
+    const dest = sessionStorage.getItem('oa_redirect') || getDefaultDest();
+    sessionStorage.removeItem('oa_redirect');
+    window.location.href = dest;
+  }
+});
+
+function getDefaultDest() {
+  const stage = localStorage.getItem('oa_stage');
+  if (stage) return stage + '.html';
+  return 'index.html';
 }
 
-function sendCode() {
+// ── Email step ──
+async function sendCode() {
   const email = document.getElementById('email-input').value.trim();
-  if (!email || !email.includes('@')) { toast('Please enter a valid email address.'); return; }
+  const errEl = document.getElementById('email-error');
+  errEl.style.display = 'none';
+
+  if (!email || !email.includes('@')) {
+    errEl.textContent = 'Please enter a valid email address.';
+    errEl.style.display = 'block';
+    return;
+  }
 
   const btn = document.getElementById('send-btn');
-  btn.disabled = true;
-  btn.textContent = 'Sending…';
+  setBtnLoading(btn, true);
 
-  pendingEmail = email;
-  otpCode = '123456'; // Demo — in production: call your backend
+  try {
+    const { error } = await sb.auth.signInWithOtp({
+      email,
+      options: { shouldCreateUser: true }
+    });
+    if (error) throw error;
 
-  setTimeout(() => {
-    document.getElementById('otp-email-label').textContent = email;
-    document.getElementById('step-email').style.display = 'none';
-    document.getElementById('step-otp').style.display = 'block';
+    pendingEmail = email;
+    document.getElementById('otp-email-shown').textContent = email;
+    showStep('otp');
     setTimeout(() => document.getElementById('d0').focus(), 100);
-    btn.disabled = false;
-    btn.textContent = 'Send Code →';
-  }, 800);
+  } catch (err) {
+    errEl.textContent = err.message || 'Failed to send code. Please try again.';
+    errEl.style.display = 'block';
+  } finally {
+    setBtnLoading(btn, false, 'Send Code →');
+  }
 }
 
-function showEmailStep() {
-  document.getElementById('step-otp').style.display = 'none';
-  document.getElementById('step-email').style.display = 'block';
+// ── OTP step ──
+function otpIn(idx) {
+  const val = document.getElementById('d'+idx).value;
+  if (val && idx < 5) {
+    document.getElementById('d'+(idx+1)).focus();
+  }
+  // Auto-verify when all 6 filled
+  const full = [0,1,2,3,4,5].map(i => document.getElementById('d'+i).value).join('');
+  if (full.length === 6) verifyCode();
 }
 
-function verifyCode() {
-  const code = [0,1,2,3,4,5].map(i => document.getElementById('d'+i).value).join('');
-  if (code.length < 6) { toast('Please enter the full 6-digit code.'); return; }
-  if (code !== otpCode) { toast('Invalid code. (Demo: use 123456)'); return; }
+function otpKey(e, idx) {
+  if (e.key === 'Backspace' && !document.getElementById('d'+idx).value && idx > 0) {
+    document.getElementById('d'+(idx-1)).focus();
+  }
+}
+
+async function verifyCode() {
+  const token = [0,1,2,3,4,5].map(i => document.getElementById('d'+i).value).join('');
+  const errEl = document.getElementById('otp-error');
+  errEl.style.display = 'none';
+
+  if (token.length < 6) {
+    errEl.textContent = 'Please enter the full 6-digit code.';
+    errEl.style.display = 'block';
+    return;
+  }
 
   const btn = document.getElementById('verify-btn');
-  btn.disabled = true; btn.textContent = 'Signing in…';
+  setBtnLoading(btn, true);
 
-  // Save to state
-  S.setEmail(pendingEmail);
-  const name = pendingEmail.split('@')[0];
-  S.setName(name.charAt(0).toUpperCase() + name.slice(1));
+  try {
+    const { data, error } = await sb.auth.verifyOtp({
+      email: pendingEmail,
+      token,
+      type: 'email'
+    });
+    if (error) throw error;
 
-  toast('✓ Signed in!');
-  setTimeout(() => {
-    const dest = S.stage ? S.stage + '.html' : 'onboarding.html';
-    window.location.href = dest;
-  }, 700);
+    // Upsert profile
+    if (data?.user) {
+      const stage = localStorage.getItem('oa_stage');
+      await sb.from('profiles').upsert({
+        id: data.user.id,
+        stage: stage || null,
+        updated_at: new Date().toISOString()
+      });
+    }
+
+    showStep('success');
+    setTimeout(() => {
+      const dest = sessionStorage.getItem('oa_redirect') || getDefaultDest();
+      sessionStorage.removeItem('oa_redirect');
+      window.location.href = dest;
+    }, 1200);
+
+  } catch (err) {
+    errEl.textContent = err.message || 'Invalid code. Please try again.';
+    errEl.style.display = 'block';
+    setBtnLoading(btn, false, 'Verify & Sign In →');
+  }
 }
 
-// OTP digit auto-advance
-document.querySelectorAll('.otp-digit').forEach((el, i) => {
-  el.addEventListener('input', () => {
-    if (el.value && i < 5) document.getElementById('d'+(i+1)).focus();
-    if (el.value.length > 1) el.value = el.value.slice(-1);
-    // Auto-verify when all 6 filled
-    const code = [0,1,2,3,4,5].map(j => document.getElementById('d'+j).value).join('');
-    if (code.length === 6) verifyCode();
-  });
-  el.addEventListener('keydown', e => {
-    if (e.key === 'Backspace' && !el.value && i > 0) document.getElementById('d'+(i-1)).focus();
-    if (e.key === 'Enter') verifyCode();
-  });
-});
+async function resendCode() {
+  if (!pendingEmail) return;
+  try {
+    await sb.auth.signInWithOtp({ email: pendingEmail, options: { shouldCreateUser: true } });
+    toast('Code sent!');
+    [0,1,2,3,4,5].forEach(i => document.getElementById('d'+i).value = '');
+    document.getElementById('d0').focus();
+  } catch (err) {
+    toast('Failed to resend. Please try again.');
+  }
+}
 
-// Allow pasting full code
-document.getElementById('d0').addEventListener('paste', e => {
-  const text = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g,'').slice(0,6);
-  text.split('').forEach((ch, i) => { const el = document.getElementById('d'+i); if(el) el.value = ch; });
-  e.preventDefault();
-  if (text.length === 6) verifyCode();
-});
+function backToEmail() {
+  showStep('email');
+  [0,1,2,3,4,5].forEach(i => document.getElementById('d'+i).value = '');
+  document.getElementById('otp-error').style.display = 'none';
+}
 
-document.getElementById('email-input').addEventListener('keydown', e => { if (e.key === 'Enter') sendCode(); });
+function goStage() {
+  const stage = localStorage.getItem('oa_stage');
+  window.location.href = stage ? stage + '.html' : 'index.html';
+}
+
+function showStep(name) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-'+name).classList.add('active');
+}
+
+// ── Helpers (inline — no shared.js dep for this page) ──
+function toast(msg) {
+  document.querySelectorAll('.toast-msg').forEach(e => e.remove());
+  const el = document.createElement('div');
+  el.className = 'toast-msg'; el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+}
+
+function setBtnLoading(btn, loading, originalText) {
+  if (!btn) return;
+  btn.disabled = loading;
+  btn.innerHTML = loading ? '<span class="spinner"></span> Please wait…' : (originalText || btn.textContent);
+}
 </script>
 </body>
 </html>

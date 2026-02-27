@@ -5,88 +5,330 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Profile — OneAccord</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared.css">
 <style>
-body{background:var(--surface)}
-.prof-wrap{max-width:640px;margin:0 auto;padding:40px 24px}
-.prof-avatar{width:72px;height:72px;border-radius:50%;background:var(--ink);color:#fff;font-size:28px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
-.prof-name{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.prof-email-sub{font-size:14px;color:var(--muted);margin-bottom:32px}
-.prof-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.prof-section-title{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
-.prof-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);gap:12px;flex-wrap:wrap}
-.prof-row:last-child{border-bottom:none}
-.prof-label{font-size:14px;font-weight:600;color:var(--ink)}
-.prof-value{font-size:14px;color:var(--muted);flex:1}
-@media(max-width:600px){
-  .prof-wrap{padding:24px 14px 84px}
-  .prof-row{flex-wrap:wrap}
-  .prof-value{width:100%}
+body { background: var(--surface); }
+
+.prof-wrap {
+  max-width: 640px; margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* Avatar header */
+.prof-header {
+  display: flex; align-items: center; gap: 18px;
+  margin-bottom: 32px;
+}
+.prof-avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: var(--ink); color: #fff;
+  font-family: var(--fd); font-size: 24px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.prof-name  { font-family: var(--fd); font-size: 22px; font-weight: 800; letter-spacing: -.5px; }
+.prof-email { font-size: 13px; color: var(--muted); margin-top: 3px; }
+
+/* Cards */
+.prof-card {
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: var(--radius); padding: 20px 22px;
+  margin-bottom: 14px;
+}
+.prof-section-title {
+  font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 14px;
+}
+.prof-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 0; border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.prof-row:last-child { border-bottom: none; }
+.prof-label { font-size: 14px; font-weight: 600; color: var(--ink); flex-shrink: 0; min-width: 140px; }
+.prof-value { font-size: 14px; color: var(--muted); flex: 1; }
+.prof-action {
+  background: none; border: none; cursor: pointer;
+  font-family: var(--fb); font-size: 13px; font-weight: 500;
+  color: var(--muted); padding: 4px 0; transition: color .2s;
+  text-decoration: underline; flex-shrink: 0;
+}
+.prof-action:hover { color: var(--ink); }
+
+/* Stats bar */
+.stats-bar {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px; background: var(--border);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+  margin-bottom: 14px;
+}
+.stat-cell {
+  background: #fff; padding: 18px 14px; text-align: center;
+}
+.stat-num   { font-family: var(--fd); font-size: 30px; font-weight: 800; color: var(--ink); line-height: 1; margin-bottom: 5px; }
+.stat-label { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: .05em; text-transform: uppercase; }
+
+/* Declarations preview */
+.decl-preview-item {
+  padding: 14px 0; border-bottom: 1px solid var(--border);
+}
+.decl-preview-item:last-child { border-bottom: none; }
+.dpi-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.dpi-text  { font-size: 13px; color: var(--muted); font-style: italic; line-height: 1.55;
+             display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.dpi-meta  { font-size: 11px; color: var(--subtle); margin-top: 5px; }
+
+/* Skeleton loader */
+.skeleton {
+  background: linear-gradient(90deg, var(--border) 25%, var(--surface) 50%, var(--border) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 6px; height: 16px;
+}
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+/* Responsive */
+@media(max-width:600px) {
+  .prof-wrap { padding: 24px 14px 80px; }
+  .prof-label { min-width: 110px; }
+  .stats-bar  { gap: 0; }
+  .stat-num   { font-size: 24px; }
+  .prof-row   { gap: 8px; }
+  .prof-value { font-size: 13px; }
 }
 </style>
 </head>
 <body>
+
 <nav class="top-nav">
   <a class="nav-logo" href="index.html"><div class="nav-logo-dot"></div>OneAccord</a>
-  <button class="nav-back" onclick="history.back()">← Back</button>
+  <span class="nav-spacer"></span>
+  <button class="nav-back" onclick="goBack()">← Back</button>
 </nav>
-<div class="prof-wrap">
-  <div id="prof-content"></div>
-</div>
-<script src="shared.js"></script>
-<script>
-window.addEventListener('load', () => {
-  const wrap = document.getElementById('prof-content');
-  const initial = (S.userName||S.email||'?').charAt(0).toUpperCase();
-  const completedCount = Object.keys(S.completedSessions).filter(k=>S.completedSessions[k]).length;
-  const stage = S.stage;
-  const stageLabel = {dating:'🌱 Dating',engaged:'💍 Engaged',married:'🕊️ Married'}[stage]||'Not set';
 
-  wrap.innerHTML = `
-    <div class="prof-avatar">${initial}</div>
-    <div class="prof-name">${S.userName||'Anonymous'}</div>
-    <div class="prof-email-sub">${S.email||'Not signed in'}</div>
+<div class="prof-wrap" id="prof-wrap">
+  <!-- Skeleton while loading -->
+  <div id="loading-state" style="padding:40px 0">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:28px">
+      <div style="width:64px;height:64px;border-radius:50%" class="skeleton"></div>
+      <div style="flex:1">
+        <div class="skeleton" style="width:60%;height:20px;margin-bottom:8px"></div>
+        <div class="skeleton" style="width:40%;height:14px"></div>
+      </div>
+    </div>
+    <div class="skeleton" style="height:100px;border-radius:14px;margin-bottom:14px"></div>
+    <div class="skeleton" style="height:80px;border-radius:14px;margin-bottom:14px"></div>
+    <div class="skeleton" style="height:80px;border-radius:14px"></div>
+  </div>
+
+  <!-- Populated by JS -->
+  <div id="prof-content" style="display:none"></div>
+
+  <!-- Not signed in state -->
+  <div id="not-signed-in" style="display:none;text-align:center;padding:60px 0">
+    <div style="font-size:48px;margin-bottom:16px">👤</div>
+    <h2 style="font-family:var(--fd);font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:8px">Not signed in</h2>
+    <p style="font-size:14px;color:var(--muted);line-height:1.65;max-width:320px;margin:0 auto 24px">
+      Sign in to save your declarations across all your devices, connect with your partner, and track your progress.
+    </p>
+    <button class="btn btn-dark btn" onclick="window.location.href='signin.html'">Sign in →</button>
+    <button class="btn btn-ghost btn" style="display:block;margin:10px auto 0" onclick="window.location.href='onboarding.html'">
+      Continue without account
+    </button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
+const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const stageLabels = {
+  dating:  '🌱 Dating / Courtship',
+  engaged: '💍 Engaged',
+  married: '🕊️ Married'
+};
+
+// ── Boot ──
+(async () => {
+  const { data: { session } } = await sb.auth.getSession();
+
+  if (!session) {
+    document.getElementById('loading-state').style.display = 'none';
+    document.getElementById('not-signed-in').style.display = 'block';
+    return;
+  }
+
+  const user = session.user;
+
+  // Parallel loads
+  const [profileRes, progressRes, declsRes, coupleRes] = await Promise.allSettled([
+    sb.from('profiles').select('*').eq('id', user.id).single(),
+    sb.from('session_progress').select('*').eq('user_id', user.id),
+    sb.from('declarations').select('*').eq('user_id', user.id).order('created_at', { ascending: false }).limit(20),
+    sb.from('couple_members').select('couple_spaces(*)').eq('user_id', user.id).single()
+  ]);
+
+  const profile     = profileRes.value?.data || null;
+  const progress    = progressRes.value?.data || [];
+  const decls       = declsRes.value?.data || [];
+  const coupleSpace = coupleRes.value?.data?.couple_spaces || null;
+
+  const displayName = profile?.display_name || user.email.split('@')[0];
+  const initial     = displayName[0].toUpperCase();
+  const stage       = profile?.stage || localStorage.getItem('oa_stage') || null;
+  const stageLabel  = stageLabels[stage] || '—';
+  const stageUrl    = stage ? stage + '.html' : 'onboarding.html';
+
+  const completedCount = progress.filter(p => p.status === 'completed').length;
+  const totalSessions  = 65; // rough total across all categories
+
+  // ── Recent declarations ──
+  const recentDeclsHtml = decls.length
+    ? decls.slice(0, 5).map(d => `
+        <div class="decl-preview-item">
+          <div class="dpi-title">${d.session_title || 'Session'}</div>
+          <div class="dpi-text">${d.declaration}</div>
+          <div class="dpi-meta">${fmtDate(d.created_at)} · ${d.category || ''} · ${d.mode === 'flash' ? '⚡ Flash' : '📖 Deep'}</div>
+        </div>`).join('')
+    : `<div style="padding:16px 0;text-align:center;font-size:14px;color:var(--muted)">No declarations yet — complete your first session.</div>`;
+
+  // ── Couple space ──
+  const coupleHtml = coupleSpace?.connected
+    ? `<span class="badge badge-lime">✓ Connected</span>`
+    : `<span class="badge badge-gray">Not connected</span>`;
+
+  const coupleAction = coupleSpace?.connected
+    ? `<button class="prof-action" onclick="goToCouple()">Manage</button>`
+    : `<button class="prof-action" onclick="goToCouple()">Connect →</button>`;
+
+  document.getElementById('prof-content').innerHTML = `
+    <div class="prof-header">
+      <div class="prof-avatar">${initial}</div>
+      <div>
+        <div class="prof-name">${displayName}</div>
+        <div class="prof-email">${user.email}</div>
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat-cell">
+        <div class="stat-num">${completedCount}</div>
+        <div class="stat-label">Completed</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">${decls.length}</div>
+        <div class="stat-label">Declarations</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">${Math.max(0, totalSessions - completedCount)}</div>
+        <div class="stat-label">Remaining</div>
+      </div>
+    </div>
 
     <div class="prof-card">
       <div class="prof-section-title">Account</div>
       <div class="prof-row">
-        <span class="prof-label">Email</span>
-        <span class="prof-value">${S.email||'—'}</span>
-        ${!S.email?'<button class="btn-dark" onclick="navigate(\'signin.html\')" style="padding:9px 18px;font-size:13px">Sign In →</button>':''}
+        <div class="prof-label">Email</div>
+        <div class="prof-value">${user.email}</div>
       </div>
       <div class="prof-row">
-        <span class="prof-label">Relationship stage</span>
-        <span class="prof-value">${stageLabel}</span>
-        <button class="btn-ghost" onclick="navigate('onboarding.html')" style="padding:6px 12px;font-size:12px">Change</button>
+        <div class="prof-label">Display name</div>
+        <div class="prof-value" id="name-display">${displayName}</div>
+        <button class="prof-action" onclick="editName()">Edit</button>
+      </div>
+      <div class="prof-row">
+        <div class="prof-label">Relationship stage</div>
+        <div class="prof-value">${stageLabel}</div>
+        <button class="prof-action" onclick="window.location.href='onboarding.html'">Change</button>
       </div>
     </div>
 
     <div class="prof-card">
       <div class="prof-section-title">Couple Space</div>
       <div class="prof-row">
-        <span class="prof-label">Partner</span>
-        <span class="prof-value">${S.partnerName||'Not connected'}</span>
-        <button class="btn-ghost" onclick="navigate((S.stage||'dating')+'.html')" style="padding:6px 12px;font-size:12px">${S.coupleSpaceId?'Manage':'Connect'}</button>
+        <div class="prof-label">Partner</div>
+        <div class="prof-value">${coupleHtml}</div>
+        ${coupleAction}
       </div>
     </div>
 
     <div class="prof-card">
-      <div class="prof-section-title">Progress</div>
-      <div class="prof-row"><span class="prof-label">Sessions completed</span><span class="prof-value">${completedCount}</span></div>
-      <div class="prof-row"><span class="prof-label">Declarations sealed</span><span class="prof-value">${S.declarations.length}</span></div>
+      <div class="prof-section-title">Recent Declarations</div>
+      ${recentDeclsHtml}
+      ${decls.length > 5 ? `<button class="prof-action" style="margin-top:10px;display:block" onclick="goToDecls()">View all ${decls.length} →</button>` : ''}
     </div>
 
-    ${S.email?`<button class="btn-ghost" style="width:100%;color:#cc4444;border-color:#ffd0d0;margin-top:8px" onclick="doSignOut()">Sign out</button>`:''}
+    <button class="btn btn-danger btn btn-full" style="margin-top:8px" onclick="doSignOut()">Sign out</button>
   `;
-});
 
-function doSignOut() {
-  if(!confirm('Sign out? Your progress is saved.')) return;
-  S.signOut();
-  toast('Signed out.');
-  setTimeout(()=>navigate('index.html'),700);
+  document.getElementById('loading-state').style.display = 'none';
+  document.getElementById('prof-content').style.display = 'block';
+})();
+
+// ── Actions ──
+function editName() {
+  const newName = prompt('Enter display name:',
+    document.getElementById('name-display')?.textContent || '');
+  if (!newName || !newName.trim()) return;
+  const name = newName.trim();
+
+  sb.auth.getUser().then(({ data: { user } }) => {
+    if (!user) return;
+    sb.from('profiles').upsert({ id: user.id, display_name: name, updated_at: new Date().toISOString() })
+      .then(() => {
+        const el = document.getElementById('name-display');
+        if (el) el.textContent = name;
+        toast('Name updated!');
+      });
+  });
+}
+
+function goToCouple() {
+  const stage = localStorage.getItem('oa_stage') || 'dating';
+  // Navigate to stage page, then open couple panel
+  sessionStorage.setItem('oa_open_panel', 'couple');
+  window.location.href = stage + '.html';
+}
+
+function goToDecls() {
+  const stage = localStorage.getItem('oa_stage') || 'dating';
+  sessionStorage.setItem('oa_open_panel', 'declarations');
+  window.location.href = stage + '.html';
+}
+
+async function doSignOut() {
+  if (!confirm('Sign out?')) return;
+  await sb.auth.signOut();
+  window.location.href = 'index.html';
+}
+
+function goBack() {
+  if (document.referrer) {
+    history.back();
+  } else {
+    const stage = localStorage.getItem('oa_stage') || 'dating';
+    window.location.href = stage + '.html';
+  }
+}
+
+// ── Utils ──
+function fmtDate(iso) {
+  try { return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }); }
+  catch(e) { return ''; }
+}
+
+function toast(msg) {
+  document.querySelectorAll('.toast-msg').forEach(e => e.remove());
+  const el = Object.assign(document.createElement('div'), { className: 'toast-msg', textContent: msg });
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 3000);
 }
 </script>
+
 </body>
 </html>

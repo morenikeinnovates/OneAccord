@@ -5,64 +5,130 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Get Started — OneAccord</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared.css">
 <style>
-body { background:var(--surface); min-height:100vh; }
-.onboard-wrap { max-width:640px;margin:0 auto;padding:60px 24px; }
+body { background: var(--surface); }
+
+.onboard-wrap {
+  max-width: 600px; margin: 0 auto;
+  padding: 52px 24px 80px;
+}
+
+/* Steps */
+.step { display: none; animation: fadeUp .35s ease; }
+.step.active { display: block; }
+
+/* Progress dots */
+.pdots {
+  display: flex; gap: 8px; margin-bottom: 36px;
+}
+.pdot {
+  height: 8px; border-radius: 4px;
+  background: var(--border); transition: all .35s;
+  width: 8px;
+}
+.pdot.active { background: var(--ink); width: 28px; border-radius: 4px; }
+.pdot.done   { background: var(--lime); width: 8px; }
 
 /* Stage cards */
-.stage-cards { display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:36px; }
-.stage-card { background:#fff;border:2px solid var(--border);border-radius:16px;padding:24px 16px;text-align:center;cursor:pointer;transition:all .22s; }
-.stage-card:hover { border-color:var(--border2);box-shadow:var(--shadow); }
-.stage-card.selected { border-color:var(--lime);background:var(--lime-bg); }
-.stage-card-emoji { font-size:32px;display:block;margin-bottom:10px; }
-.stage-card-name { font-size:16px;font-weight:700;color:var(--ink);margin-bottom:4px; }
-.stage-card-hint { font-size:12px;color:var(--muted);line-height:1.4; }
+.stage-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 12px; margin-bottom: 28px;
+}
+.stage-card {
+  background: #fff; border: 2px solid var(--border);
+  border-radius: 16px; padding: 22px 14px;
+  text-align: center; cursor: pointer;
+  transition: all .22s;
+}
+.stage-card:hover { border-color: var(--border2); box-shadow: var(--shadow); transform: translateY(-2px); }
+.stage-card.selected { border-color: var(--lime); background: var(--lime-bg); }
+.stage-card .sc-emoji { font-size: 30px; display: block; margin-bottom: 10px; }
+.stage-card .sc-name  { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.stage-card .sc-hint  { font-size: 12px; color: var(--muted); line-height: 1.4; }
 
-/* Zero steps */
-.zero-steps { position:relative; }
-.zero-step { display:none; animation:fadeUp .35s ease; }
-.zero-step.active { display:block; }
+/* How-it-works grid */
+.how-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 12px; margin-bottom: 32px;
+}
+.how-card {
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 18px 14px; text-align: center;
+}
+.how-num {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--ink); color: #fff;
+  font-size: 13px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 10px;
+}
+.how-label { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.how-desc  { font-size: 12px; color: var(--muted); line-height: 1.5; }
 
-.pdots { display:flex;gap:8px;margin-bottom:36px; }
-.pdot { width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .3s; }
-.pdot.active { background:var(--ink);width:24px;border-radius:4px; }
-.pdot.done { background:var(--lime); }
+/* Reflection box */
+.reflect-box {
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: var(--radius); padding: 20px;
+  margin-bottom: 20px;
+  transition: border-color .2s;
+}
+.reflect-box:focus-within { border-color: var(--lime); }
+.reflect-q { font-size: 16px; font-weight: 600; color: var(--ink); line-height: 1.5; margin-bottom: 12px; }
 
-.how-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px; }
-.how-card { background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px 16px;text-align:center; }
-.how-num { width:32px;height:32px;border-radius:50%;background:var(--ink);color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 10px; }
-.how-label { font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px; }
-.how-desc { font-size:12px;color:var(--muted);line-height:1.5; }
-
-.z-question { background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px; }
-.z-q-text { font-size:16px;font-weight:600;color:var(--ink);margin-bottom:14px;line-height:1.5; }
-.z-input { width:100%;font-family:inherit;font-size:15px;color:var(--ink);background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:13px 16px;resize:vertical;min-height:100px;outline:none;transition:border-color .2s;line-height:1.6; }
-.z-input:focus { border-color:var(--lime); }
-
-.decl-success { background:var(--ink);border-radius:16px;padding:32px;margin:20px 0;text-align:center; }
-.ds-label { font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);margin-bottom:16px; }
-.ds-text { font-size:18px;font-weight:500;color:#fff;line-height:1.65;font-style:italic; }
+/* Declaration card */
+.decl-card {
+  background: var(--ink); border-radius: 16px;
+  padding: 30px 28px; margin: 20px 0; text-align: center;
+}
+.decl-card-label {
+  font-size: 11px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--lime); margin-bottom: 14px;
+}
+.decl-card-text {
+  font-size: 18px; font-weight: 500; color: #fff;
+  line-height: 1.65; font-style: italic;
+}
 
 /* Email capture */
-.email-capture { background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-top:24px; }
-.ec-title { font-size:16px;font-weight:700;color:var(--ink);margin-bottom:6px; }
-.ec-sub { font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:16px; }
-.ec-row { display:flex;gap:10px; }
-.ec-input { flex:1;font-family:inherit;font-size:15px;color:var(--ink);background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;outline:none;transition:border-color .2s; }
-.ec-input:focus { border-color:var(--lime); }
-.ec-btn { background:var(--ink);color:#fff;border:none;font-family:inherit;font-size:14px;font-weight:600;padding:12px 20px;border-radius:10px;cursor:pointer;white-space:nowrap;transition:all .2s; }
-.ec-btn:hover { background:var(--ink2); }
-.ec-skip { display:block;text-align:center;margin-top:12px;font-size:13px;color:var(--muted);background:none;border:none;font-family:inherit;cursor:pointer;width:100%; }
-.ec-skip:hover { color:var(--ink); }
+.email-capture {
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: var(--radius); padding: 22px; margin-top: 20px;
+}
+.ec-title { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.ec-sub   { font-size: 13px; color: var(--muted); line-height: 1.55; margin-bottom: 16px; }
+.ec-row   { display: flex; gap: 10px; }
+.ec-input {
+  flex: 1; font-family: var(--fb); font-size: 14px;
+  color: var(--ink); background: var(--surface);
+  border: 1.5px solid var(--border); border-radius: 9px;
+  padding: 11px 13px; outline: none; transition: border-color .2s;
+}
+.ec-input:focus { border-color: var(--lime); }
+.ec-btn {
+  background: var(--ink); color: #fff; border: none;
+  font-family: var(--fb); font-size: 13px; font-weight: 600;
+  padding: 11px 18px; border-radius: 9px;
+  cursor: pointer; white-space: nowrap; transition: all .2s;
+}
+.ec-btn:hover { background: var(--ink2); }
+.ec-skip {
+  display: block; text-align: center; margin-top: 10px;
+  font-size: 13px; color: var(--muted);
+  background: none; border: none;
+  font-family: var(--fb); cursor: pointer;
+  width: 100%; transition: color .2s;
+}
+.ec-skip:hover { color: var(--ink); }
 
-@media(max-width:600px){
-  .onboard-wrap { padding:32px 16px 60px; }
-  .stage-cards { grid-template-columns:1fr;gap:10px; }
-  .how-grid { grid-template-columns:1fr;gap:10px; }
-  .ec-row { flex-direction:column; }
-  .ec-input,.ec-btn { width:100%; }
+/* Responsive */
+@media(max-width:600px) {
+  .onboard-wrap { padding: 32px 14px 60px; }
+  .stage-grid { grid-template-columns: 1fr; gap: 10px; }
+  .how-grid { grid-template-columns: 1fr; gap: 10px; }
+  .ec-row { flex-direction: column; }
+  .ec-input, .ec-btn { width: 100%; }
 }
 </style>
 </head>
@@ -70,214 +136,298 @@ body { background:var(--surface); min-height:100vh; }
 
 <nav class="top-nav">
   <a class="nav-logo" href="index.html"><div class="nav-logo-dot"></div>OneAccord</a>
-  <div id="nav-user" class="nav-user" style="margin-left:auto;display:none;">
-    <span class="nav-user-name" id="nav-name"></span>
-    <button class="nav-profile-btn" id="nav-initial" onclick="navigate('profile.html')"></button>
-  </div>
+  <span class="nav-spacer"></span>
+  <button class="nav-link-btn" id="nav-signin-btn" onclick="window.location.href='signin.html'">Sign in</button>
 </nav>
 
 <div class="onboard-wrap">
 
-  <!-- STAGE SELECTION -->
-  <div id="view-stage" class="zero-step active">
+  <!-- ── Step 1: Choose stage ── -->
+  <div class="step active" id="s1">
     <div class="page-eyebrow">Getting started</div>
     <h1 class="page-h1">Where are you<br>in your relationship?</h1>
-    <p class="page-sub">Your stage shapes your recommended session path. You can always change this later.</p>
-    <div class="stage-cards">
-      <div class="stage-card" onclick="selectStage('dating',this)">
-        <span class="stage-card-emoji">🌱</span>
-        <div class="stage-card-name">Dating</div>
-        <div class="stage-card-hint">Exploring, building something intentional.</div>
+    <p class="page-sub">Your stage shapes your recommended session path. You can change this anytime.</p>
+
+    <div class="stage-grid">
+      <div class="stage-card" onclick="selectStage('dating', this)">
+        <span class="sc-emoji">🌱</span>
+        <div class="sc-name">Dating</div>
+        <div class="sc-hint">Exploring, building something intentional.</div>
       </div>
-      <div class="stage-card" onclick="selectStage('engaged',this)">
-        <span class="stage-card-emoji">💍</span>
-        <div class="stage-card-name">Engaged</div>
-        <div class="stage-card-hint">Preparing for the covenant of marriage.</div>
+      <div class="stage-card" onclick="selectStage('engaged', this)">
+        <span class="sc-emoji">💍</span>
+        <div class="sc-name">Engaged</div>
+        <div class="sc-hint">Preparing for the covenant of marriage.</div>
       </div>
-      <div class="stage-card" onclick="selectStage('married',this)">
-        <span class="stage-card-emoji">🕊️</span>
-        <div class="stage-card-name">Married</div>
-        <div class="stage-card-hint">Going deeper, building a lasting foundation.</div>
+      <div class="stage-card" onclick="selectStage('married', this)">
+        <span class="sc-emoji">🕊️</span>
+        <div class="sc-name">Married</div>
+        <div class="sc-hint">Going deeper, building a lasting foundation.</div>
       </div>
     </div>
-    <button class="btn-dark" id="stage-cta" style="width:100%;opacity:.35;pointer-events:none" onclick="goToZero()">
+
+    <button class="btn btn-dark btn-full" id="stage-next-btn" disabled onclick="goStep(2)">
       Begin Session Zero →
     </button>
   </div>
 
-  <!-- SESSION ZERO -->
-  <div id="view-zero" class="zero-step">
-    <div class="pdots" id="pdots">
-      <div class="pdot active" id="pd1"></div>
-      <div class="pdot" id="pd2"></div>
-      <div class="pdot" id="pd3"></div>
-      <div class="pdot" id="pd4"></div>
+  <!-- ── Step 2: How it works ── -->
+  <div class="step" id="s2">
+    <div class="pdots">
+      <div class="pdot active" id="dot1"></div>
+      <div class="pdot" id="dot2"></div>
+      <div class="pdot" id="dot3"></div>
+      <div class="pdot" id="dot4"></div>
     </div>
 
-    <!-- Step 1 -->
-    <div class="zero-step active" id="zs1">
-      <div class="page-eyebrow">Session Zero</div>
-      <h1 class="page-h1">Before you begin,<br>understand the structure.</h1>
-      <p class="page-sub">Every session moves through four phases. Here's how it works.</p>
-      <div class="how-grid">
-        <div class="how-card"><div class="how-num">1</div><div class="how-label">My Story</div><div class="how-desc">Private reflection on your own experience. Yours alone.</div></div>
-        <div class="how-card"><div class="how-num">2</div><div class="how-label">Your Story</div><div class="how-desc">What you observe and understand about your partner.</div></div>
-        <div class="how-card"><div class="how-num">3</div><div class="how-label">Find Our Middle</div><div class="how-desc">From two views to one shared position.</div></div>
+    <div class="page-eyebrow">Session Zero</div>
+    <h1 class="page-h1">Before you begin,<br>understand the structure.</h1>
+    <p class="page-sub">Every session moves through four phases designed to surface, share, and seal what you believe together.</p>
+
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-num">1</div>
+        <div class="how-label">My Story</div>
+        <div class="how-desc">Private reflection on your own experience. Yours alone until you share.</div>
       </div>
-      <button class="btn-dark" style="width:100%" onclick="zeroStep(2)">Continue →</button>
+      <div class="how-card">
+        <div class="how-num">2</div>
+        <div class="how-label">Your Story</div>
+        <div class="how-desc">Your observations and understanding of your partner.</div>
+      </div>
+      <div class="how-card">
+        <div class="how-num">3</div>
+        <div class="how-label">Our Middle</div>
+        <div class="how-desc">From two perspectives to one shared position.</div>
+      </div>
     </div>
 
-    <!-- Step 2 -->
-    <div class="zero-step" id="zs2">
-      <div class="page-eyebrow">My Story — Your turn first</div>
-      <h1 class="page-h1">Reflect before you share.</h1>
-      <div class="z-question">
-        <p class="z-q-text">What is the one thing you most want this relationship to be defined by — above everything else?</p>
-        <textarea class="z-input" id="zero-q1" placeholder="Write your reflection here — this is just for you…"></textarea>
-      </div>
-      <button class="btn-dark" style="width:100%" onclick="zeroStep(3)">Continue →</button>
+    <button class="btn btn-dark btn-full" onclick="goStep(3)">Continue →</button>
+    <button class="btn btn-ghost btn-full" onclick="goStep(1)" style="margin-top:8px">← Back</button>
+  </div>
+
+  <!-- ── Step 3: My Story ── -->
+  <div class="step" id="s3">
+    <div class="pdots">
+      <div class="pdot done" id="dot1"></div>
+      <div class="pdot active" id="dot2"></div>
+      <div class="pdot" id="dot3"></div>
+      <div class="pdot" id="dot4"></div>
     </div>
 
-    <!-- Step 3 -->
-    <div class="zero-step" id="zs3">
-      <div class="page-eyebrow">Your Story — Now understand them</div>
-      <h1 class="page-h1">What do you know about<br>your partner?</h1>
-      <div class="z-question">
-        <p class="z-q-text">What do you think your partner most wants this relationship to be defined by?</p>
-        <textarea class="z-input" id="zero-q2" placeholder="Your observation of who they are…"></textarea>
-      </div>
-      <button class="btn-dark" style="width:100%" onclick="generateDeclaration()">Generate My First Declaration →</button>
+    <div class="page-eyebrow">My Story — Your turn first</div>
+    <h1 class="page-h1">Reflect before<br>you share.</h1>
+    <p class="page-sub" style="margin-bottom:20px">This is private — just for you, unless you choose to share it.</p>
+
+    <div class="reflect-box">
+      <div class="reflect-q">What is the one thing you most want this relationship to be defined by — above everything else?</div>
+      <textarea class="field-textarea" id="q1" placeholder="Write your reflection here — this is just for you…" rows="4"></textarea>
     </div>
 
-    <!-- Step 4 -->
-    <div class="zero-step" id="zs4">
-      <div class="page-eyebrow">Your First Declaration</div>
-      <h1 class="page-h1" style="text-align:center">Here it is.</h1>
-      <div class="decl-success">
-        <div class="ds-label">✦ Your Declaration</div>
-        <div class="ds-text" id="decl-text">Generating…</div>
-      </div>
-      <p class="page-sub" style="text-align:center;margin-top:12px;">This is what a declaration looks like. Every session ends with one — written in your own words, sealed permanently into your shared archive.</p>
+    <button class="btn btn-dark btn-full" onclick="goStep(4)">Continue →</button>
+    <button class="btn btn-ghost btn-full" onclick="goStep(2)" style="margin-top:8px">← Back</button>
+  </div>
 
-      <div id="email-capture-wrap">
-        <div class="email-capture" id="email-capture-box">
-          <div class="ec-title">Save your progress?</div>
-          <div class="ec-sub">Enter your email to preserve your declarations across sessions and devices — no password, ever.</div>
-          <div class="ec-row">
-            <input class="ec-input" type="email" id="capture-email" placeholder="your@email.com">
-            <button class="ec-btn" onclick="saveEmailCapture()">Save →</button>
-          </div>
-          <button class="ec-skip" onclick="skipEmail()">Skip for now</button>
-        </div>
-      </div>
-
-      <button class="btn-dark" id="enter-library-btn" style="width:100%;display:none;margin-top:20px" onclick="enterLibrary()">
-        Enter Session Library →
-      </button>
+  <!-- ── Step 4: Your Story + Declaration ── -->
+  <div class="step" id="s4">
+    <div class="pdots">
+      <div class="pdot done"></div>
+      <div class="pdot done"></div>
+      <div class="pdot active"></div>
+      <div class="pdot" id="dot4b"></div>
     </div>
+
+    <div class="page-eyebrow">Your Story — Now understand them</div>
+    <h1 class="page-h1">What do you know<br>about your partner?</h1>
+
+    <div class="reflect-box">
+      <div class="reflect-q">What do you think your partner most wants this relationship to be defined by?</div>
+      <textarea class="field-textarea" id="q2" placeholder="Your observation of who they are…" rows="4"></textarea>
+    </div>
+
+    <button class="btn btn-lime btn-full" id="gen-btn" onclick="generateDeclaration()">
+      Generate My First Declaration →
+    </button>
+    <button class="btn btn-ghost btn-full" onclick="goStep(3)" style="margin-top:8px">← Back</button>
+  </div>
+
+  <!-- ── Step 5: Declaration ── -->
+  <div class="step" id="s5">
+    <div class="pdots">
+      <div class="pdot done"></div>
+      <div class="pdot done"></div>
+      <div class="pdot done"></div>
+      <div class="pdot active"></div>
+    </div>
+
+    <div class="page-eyebrow">Your First Declaration</div>
+    <h1 class="page-h1" style="text-align:center">Here it is.</h1>
+
+    <div class="decl-card">
+      <div class="decl-card-label">✦ Your Declaration</div>
+      <div class="decl-card-text" id="decl-out">Generating…</div>
+    </div>
+
+    <p style="font-size:14px;color:var(--muted);line-height:1.7;text-align:center;margin-bottom:20px">
+      This is what a declaration looks like. Every session ends with one — sealed permanently into your shared archive.
+    </p>
+
+    <!-- Email capture (hidden if already signed in) -->
+    <div class="email-capture" id="email-capture-box">
+      <div class="ec-title">Save your progress?</div>
+      <div class="ec-sub">Enter your email to preserve your declarations across sessions and devices — no password, ever.</div>
+      <div class="ec-row">
+        <input class="ec-input" type="email" id="capture-email" placeholder="your@email.com"
+          onkeydown="if(event.key==='Enter')saveEmailAndContinue()">
+        <button class="ec-btn" onclick="saveEmailAndContinue()">Save →</button>
+      </div>
+      <button class="ec-skip" onclick="skipEmailCapture()">Skip for now</button>
+    </div>
+
+    <!-- Enter library (shown after email saved or skipped) -->
+    <button class="btn btn-dark btn-full" id="enter-lib-btn" style="display:none;margin-top:16px" onclick="enterLibrary()">
+      Enter Session Library →
+    </button>
   </div>
 
 </div>
 
-<script src="shared.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-let currentStage = null;
-let zeroStepNum = 1;
-const ZERO_STEPS = 4;
+// ── Supabase config ──
+const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
+const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Init nav
-window.addEventListener('load', () => {
-  if (S.email) {
-    document.getElementById('nav-user').style.display = 'flex';
-    document.getElementById('nav-name').textContent = S.userName || S.email;
-    document.getElementById('nav-initial').textContent = (S.userName || S.email).charAt(0).toUpperCase();
-    // Hide email capture if already signed in
-    document.getElementById('email-capture-wrap').style.display = 'none';
-    document.getElementById('enter-library-btn').style.display = 'block';
-  }
-  // If already has a stage, skip to zero
-  if (S.stage) {
-    currentStage = S.stage;
-    showView('view-zero');
-  }
-});
+let selectedStage = localStorage.getItem('oa_stage') || null;
+let currentStep   = 1;
 
+// ── Boot ──
+(async () => {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    // Already signed in — hide sign-in button, show initial
+    const initial = session.user.email[0].toUpperCase();
+    document.getElementById('nav-signin-btn').innerHTML =
+      `<button class="nav-user-btn" onclick="window.location.href='profile.html'">${initial}</button>`;
+    document.getElementById('nav-signin-btn').style.cssText = '';
+  }
+
+  // Pre-select stage if saved
+  if (selectedStage) {
+    const map = { dating: 0, engaged: 1, married: 2 };
+    const idx = map[selectedStage];
+    if (idx !== undefined) {
+      const cards = document.querySelectorAll('.stage-card');
+      cards[idx]?.classList.add('selected');
+      document.getElementById('stage-next-btn').disabled = false;
+    }
+  }
+})();
+
+// ── Stage selection ──
 function selectStage(stage, el) {
-  currentStage = stage;
+  selectedStage = stage;
   document.querySelectorAll('.stage-card').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
-  const cta = document.getElementById('stage-cta');
-  cta.style.opacity = '1';
-  cta.style.pointerEvents = 'auto';
+  document.getElementById('stage-next-btn').disabled = false;
 }
 
-function goToZero() {
-  if (!currentStage) return;
-  S.setStage(currentStage);
-  showView('view-zero');
+// ── Step navigation ──
+function goStep(n) {
+  document.getElementById('s' + currentStep).classList.remove('active');
+  currentStep = n;
+  document.getElementById('s' + n).classList.add('active');
+  window.scrollTo(0, 0);
 }
 
-function showView(id) {
-  document.querySelectorAll('#view-stage,#view-zero').forEach(v => v.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
-}
-
-function zeroStep(n) {
-  document.getElementById('zs'+zeroStepNum).classList.remove('active');
-  zeroStepNum = n;
-  document.getElementById('zs'+n).classList.add('active');
-  // Update dots
-  for (let i=1; i<=ZERO_STEPS; i++) {
-    const dot = document.getElementById('pd'+i);
-    if (!dot) continue;
-    dot.className = 'pdot' + (i < n ? ' done' : i === n ? ' active' : '');
-  }
-  window.scrollTo(0,0);
-}
-
+// ── Generate declaration (step 4 → 5) ──
 async function generateDeclaration() {
-  const q1 = (document.getElementById('zero-q1').value||'').trim();
-  const q2 = (document.getElementById('zero-q2').value||'').trim();
+  const q1 = (document.getElementById('q1').value || '').trim();
+  const q2 = (document.getElementById('q2').value || '').trim();
 
-  zeroStep(4);
-  document.getElementById('decl-text').textContent = '✦ Crafting your declaration…';
+  // Save stage
+  if (selectedStage) localStorage.setItem('oa_stage', selectedStage);
+
+  // Transition to step 5
+  goStep(5);
+
+  const declEl = document.getElementById('decl-out');
+  declEl.textContent = '✦ Crafting your declaration…';
 
   const fallback = "We agree that this relationship should be defined by faith, honesty, and the willingness to always choose each other.";
 
   try {
-    const ai = await aiDeclaration({ q1, q2 });
-    document.getElementById('decl-text').textContent = '"' + (ai || fallback) + '"';
+    const text = await aiDeclaration(q1, q2);
+    declEl.textContent = '"' + (text || fallback) + '"';
   } catch(e) {
-    document.getElementById('decl-text').textContent = '"' + fallback + '"';
+    declEl.textContent = '"' + fallback + '"';
   }
 
-  if (S.email) {
-    document.getElementById('email-capture-wrap').style.display = 'none';
-    document.getElementById('enter-library-btn').style.display = 'block';
+  // Check if already signed in
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    document.getElementById('email-capture-box').style.display = 'none';
+    document.getElementById('enter-lib-btn').style.display = 'block';
+
+    // Save declaration to Supabase
+    try {
+      await sb.from('declarations').insert({
+        user_id: session.user.id,
+        session_id: 'session-zero',
+        session_title: 'Session Zero',
+        category: 'Onboarding',
+        stage: selectedStage || 'dating',
+        mode: 'deep',
+        declaration: document.getElementById('decl-out').textContent.replace(/^"|"$/g, '')
+      });
+    } catch(e) { console.warn('Save declaration:', e.message); }
   }
 }
 
-function saveEmailCapture() {
-  const email = (document.getElementById('capture-email').value||'').trim();
+// ── Email capture (anonymous users) ──
+function saveEmailAndContinue() {
+  const email = (document.getElementById('capture-email').value || '').trim();
   if (!email || !email.includes('@')) { toast('Please enter a valid email.'); return; }
-  S.setEmail(email);
-  const name = email.split('@')[0];
-  S.setName(name.charAt(0).toUpperCase() + name.slice(1));
-  document.getElementById('email-capture-box').style.display = 'none';
-  document.getElementById('enter-library-btn').style.display = 'block';
-  toast('✓ Progress saved!');
+  sessionStorage.setItem('oa_redirect', (selectedStage || 'dating') + '.html');
+  window.location.href = 'signin.html?pre=' + encodeURIComponent(email);
 }
 
-function skipEmail() {
+function skipEmailCapture() {
   document.getElementById('email-capture-box').style.display = 'none';
-  document.getElementById('enter-library-btn').style.display = 'block';
+  document.getElementById('enter-lib-btn').style.display = 'block';
 }
 
 function enterLibrary() {
-  const stage = S.stage || currentStage || 'dating';
-  window.location.href = stage + '.html';
+  window.location.href = (selectedStage || 'dating') + '.html';
+}
+
+// ── AI declaration via Claude ──
+async function aiDeclaration(q1, q2) {
+  const prompt = `A Christian couple is writing their first relationship declaration.\nPerson's reflection on what they want the relationship defined by: "${q1 || 'faith and intentionality'}"\nTheir view of what their partner wants: "${q2 || 'similar values and direction'}"\n\nWrite ONE declaration sentence starting exactly with "We agree that" — warm, personal, grounded in Christian values. Max 2 sentences. Return ONLY the declaration text, no quotes, no explanation.`;
+
+  const r = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 100,
+      messages: [{ role: 'user', content: prompt }]
+    })
+  });
+  if (!r.ok) throw new Error('API ' + r.status);
+  const d = await r.json();
+  return (d.content || []).filter(b => b.type === 'text').map(b => b.text).join('').trim();
+}
+
+// ── Toast ──
+function toast(msg) {
+  document.querySelectorAll('.toast-msg').forEach(e => e.remove());
+  const el = Object.assign(document.createElement('div'), { className: 'toast-msg', textContent: msg });
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 3000);
 }
 </script>
+
 </body>
 </html>
