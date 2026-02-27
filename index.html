@@ -1384,9 +1384,237 @@ body {
   cursor:pointer; transition:all 0.2s;
 }
 .profile-danger-btn:hover { background:#fff8f8; }
+
+/* ══════════════════════════════════════════
+   TOAST / AI FEEDBACK
+══════════════════════════════════════════ */
+.toast-msg {
+  position:fixed; bottom:88px; left:50%; transform:translateX(-50%);
+  background:var(--ink); color:#fff; padding:11px 22px;
+  border-radius:100px; font-size:13px; font-weight:600;
+  z-index:9999; white-space:nowrap; pointer-events:none;
+  animation:toastIn .3s ease, toastOut .3s ease 2.2s forwards;
+}
+@keyframes toastIn  { from{opacity:0;transform:translateX(-50%) translateY(8px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
+@keyframes toastOut { to{opacity:0} }
+
+.ai-bar {
+  display:flex; align-items:center; gap:10px;
+  background:var(--lime-bg); border:1px solid #c8e87a;
+  border-radius:10px; padding:12px 16px; margin:12px 0;
+  font-size:13px; color:#4a6b1a; font-weight:600;
+}
+.ai-bar-dots { display:flex; gap:4px; }
+.ai-bar-dot {
+  width:6px; height:6px; border-radius:50%;
+  background:#4a6b1a; animation:aiBounce 1.2s infinite;
+}
+.ai-bar-dot:nth-child(2){animation-delay:.2s}
+.ai-bar-dot:nth-child(3){animation-delay:.4s}
+@keyframes aiBounce {
+  0%,80%,100%{transform:scale(.6);opacity:.4}
+  40%{transform:scale(1);opacity:1}
+}
+
+/* ══════════════════════════════════════════
+   MOBILE BOTTOM TAB BAR
+══════════════════════════════════════════ */
+#mob-tabs {
+  display:none;
+  position:fixed; bottom:0; left:0; right:0; z-index:300;
+  background:#fff; border-top:1px solid var(--border);
+  grid-template-columns:repeat(3,1fr);
+  padding-bottom:env(safe-area-inset-bottom,8px);
+}
+.mob-tab {
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  padding:8px 0 6px; cursor:pointer; border:none;
+  background:none; font-family:inherit; color:var(--muted);
+  transition:color .2s;
+}
+.mob-tab.on { color:var(--ink); }
+.mob-tab-icon { font-size:19px; line-height:1; }
+.mob-tab-label { font-size:10px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — 860px
+══════════════════════════════════════════ */
+@media(max-width:860px){
+  .land-nav { padding:0 20px; }
+  .land-nav-links { display:none; }
+  .land-hero { grid-template-columns:1fr; padding:48px 24px 32px; gap:0; }
+  .hero-visual { display:none; }
+  .trust-bar { padding:16px 24px; flex-wrap:wrap; gap:10px; }
+  .land-section,.cta-section { padding:48px 24px; }
+  .feature-grid { grid-template-columns:1fr 1fr; }
+  .how-section { padding:48px 24px; }
+  .how-steps { grid-template-columns:1fr 1fr; gap:20px; }
+  .land-footer { padding:24px; }
+  .top-nav { padding:0 20px; gap:10px; }
+  .nav-user-name { display:none; }
+  .library-wrap,.decls-wrap,.progress-wrap,.profile-wrap { padding:24px 20px; }
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — 600px (mobile)
+══════════════════════════════════════════ */
+@media(max-width:600px){
+  /* landing nav */
+  .land-nav { padding:0 16px; height:56px; }
+  .nav-login-link { display:none; }
+  .nav-cta { padding:9px 16px; font-size:13px; }
+  /* hero */
+  .land-hero { padding:28px 16px 20px; }
+  .hero-h1 { font-size:34px; letter-spacing:-.8px; }
+  .hero-sub { font-size:15px; }
+  .hero-btns { flex-direction:column; }
+  .btn-dark,.btn-outline { width:100%; justify-content:center; font-size:15px; }
+  .trust-bar { padding:12px 16px; }
+  .trust-label { display:none; }
+  .trust-items { gap:8px; flex-wrap:wrap; }
+  .trust-item { font-size:11px; }
+  .land-section,.cta-section { padding:36px 16px; }
+  .section-h2 { font-size:26px; }
+  .section-sub { font-size:14px; margin-bottom:28px; }
+  .feature-grid { grid-template-columns:1fr; gap:10px; }
+  .how-section { padding:36px 16px; }
+  .how-steps { grid-template-columns:1fr; gap:16px; }
+  .cta-btns { flex-direction:column; }
+  .land-footer { padding:20px 16px; flex-direction:column; gap:8px; text-align:center; }
+
+  /* auth */
+  .auth-wrap { padding:28px 16px; }
+  .auth-box { padding:24px 18px; border-radius:16px; }
+  .auth-h2 { font-size:20px; }
+  .otp-inputs { gap:6px; }
+  .otp-digit { width:40px; height:50px; font-size:20px; }
+
+  /* inner top nav */
+  .top-nav { padding:0 14px; height:54px; gap:8px; }
+  .nav-logo-dot { display:none; }
+  .nav-logo { font-size:15px; }
+  .nav-tabs { gap:1px; }
+  .nav-tab { padding:6px 9px; font-size:11px; }
+  .nav-partner-badge { display:none; }
+  .nav-back { padding:6px 12px; font-size:12px; }
+
+  /* mobile bottom tab bar visible */
+  #mob-tabs { display:grid; }
+
+  /* screens that need bottom padding for tab bar */
+  .library-wrap,.decls-wrap,.progress-wrap { padding:20px 14px 84px; }
+  .profile-wrap { padding:20px 14px 84px; }
+
+  /* stage selector */
+  .page-body { padding:28px 16px; }
+  .page-h1 { font-size:26px; }
+  .stage-cards { grid-template-columns:1fr; max-width:100%; gap:10px; }
+
+  /* session zero */
+  .zero-body { padding:28px 16px; }
+  .how-grid { grid-template-columns:1fr; gap:10px; }
+  .ecs-row { flex-direction:column; }
+  .ecs-input,.ecs-btn { width:100%; border-radius:10px; }
+
+  /* library */
+  .lib-top { flex-direction:column; gap:10px; align-items:flex-start; }
+  .cat-grid { grid-template-columns:1fr 1fr; gap:10px; }
+  .cat-card { padding:16px 14px; }
+  .cat-name { font-size:13px; }
+  .cat-count { font-size:11px; }
+  .rec-path { gap:8px; flex-wrap:wrap; }
+  .rec-step { padding:10px 14px; font-size:13px; }
+  .couple-banner { flex-wrap:wrap; gap:10px; }
+  .couple-banner-btn { width:100%; text-align:center; }
+  .connect-cta { gap:12px; }
+
+  /* picker */
+  .picker-wrap { padding:24px 14px; }
+  .mode-grid { grid-template-columns:1fr; gap:10px; }
+  .sess-item { padding:14px 16px; }
+  .sess-title { font-size:14px; }
+
+  /* flashcard */
+  .flash-wrap { padding:20px 14px; justify-content:flex-start; }
+  .flashcard { min-height:220px; }
+  .fc-face { padding:22px 18px; }
+  .fc-question { font-size:18px; }
+  .flash-controls { gap:8px; }
+  .flash-btn { padding:10px 14px; font-size:13px; }
+
+  /* deep session */
+  .sess-topbar { padding:0 14px; height:46px; top:54px; }
+  .sess-cat { display:none; }
+  .sp-seg { width:24px; }
+  .sess-step-label { font-size:11px; min-width:auto; }
+  .sess-body { padding:24px 14px 100px; }
+  .sec-title { font-size:22px; }
+  .prayer-block { padding:22px 18px; }
+  .prayer-text { font-size:16px; }
+  .decl-wrap { padding:22px 18px; }
+  .decl-preamble { font-size:17px; }
+  .decl-field { font-size:15px; min-height:80px; }
+  .q-block { padding:16px 16px; }
+  .q-text { font-size:14px; }
+  .mid-item { padding:14px 16px; }
+  .sess-nav { margin-top:32px; gap:10px; }
+  .btn-back-sess { padding:10px 14px; font-size:13px; }
+  .btn-next-sess,.btn-finish-sess { padding:10px 18px; font-size:13px; }
+
+  /* confirm */
+  .confirm-body { padding:36px 16px; }
+  .confirm-h2 { font-size:24px; }
+  .confirm-decl-card { padding:20px 18px; }
+  .confirm-decl-text { font-size:15px; }
+  .confirm-btns { flex-direction:column; }
+  .cec-row { flex-direction:column; }
+  .cec-input,.cec-btn { width:100%; }
+
+  /* couple screen */
+  .couple-wrap { padding:28px 14px; }
+  .invite-code { font-size:30px; letter-spacing:4px; }
+  .enter-code-row { flex-direction:column; }
+  .enter-code-input,.enter-code-btn { width:100%; }
+  .partner-row { padding:14px 14px; gap:10px; }
+
+  /* progress */
+  .progress-hero { padding:20px 16px; gap:6px; }
+  .ph-num { font-size:30px; }
+  .ph-label { font-size:9px; }
+  .prog-cat-grid { grid-template-columns:1fr 1fr; gap:8px; }
+  .prog-cat-item { padding:12px 14px; }
+  .timeline-item { padding:12px 14px; gap:10px; }
+
+  /* decls */
+  .decl-item { padding:18px 16px; }
+  .di-footer { gap:6px; flex-wrap:wrap; }
+
+  /* profile */
+  .profile-card { padding:18px 16px; }
+  .profile-row { flex-wrap:wrap; gap:6px; }
+  .profile-row-value { width:100%; }
+
+  /* modal */
+  .modal-box { padding:22px 18px; border-radius:16px; margin:16px; }
+}
+
 </style>
 </head>
 <body>
+
+<!-- Mobile Bottom Tab Bar -->
+<div id="mob-tabs">
+  <button class="mob-tab on" id="mbt-sessions"   onclick="mobTab('sessions')">
+    <span class="mob-tab-icon">📚</span><span class="mob-tab-label">Sessions</span>
+  </button>
+  <button class="mob-tab"    id="mbt-archive"    onclick="mobTab('archive')">
+    <span class="mob-tab-icon">✦</span><span class="mob-tab-label">Archive</span>
+  </button>
+  <button class="mob-tab"    id="mbt-progress"   onclick="mobTab('progress')">
+    <span class="mob-tab-icon">📈</span><span class="mob-tab-label">Progress</span>
+  </button>
+</div>
+
 
 <!-- ══ LANDING ══ -->
 <section class="screen active" id="screen-landing">
@@ -2206,18 +2434,6 @@ const SEC_NAMES = {
 };
 
 // ══════════════════════════════════════════════════════════
-//  SCREEN MANAGEMENT
-// ══════════════════════════════════════════════════════════
-function showScreen(name) {
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen-'+name).classList.add('active');
-  window.scrollTo(0,0);
-  // Run screen-specific hooks inline (no recursive override)
-  if(name==='couple') buildCoupleScreen();
-  if(name==='profile') buildProfileScreen();
-}
-
-// ══════════════════════════════════════════════════════════
 //  AUTH — V2 Magic Link / OTP (simulated)
 // ══════════════════════════════════════════════════════════
 function showAuthScreen(mode) {
@@ -2226,17 +2442,6 @@ function showAuthScreen(mode) {
     ?'Enter your email to get started — no password needed.'
     :'Enter your email to sign in — no password needed. We\'ll send you a 6-digit code.';
   showScreen('auth');
-}
-
-function sendOTP() {
-  const email = document.getElementById('auth-email-input').value.trim();
-  if(!email||!email.includes('@')) { alert('Please enter a valid email address.'); return; }
-  S._pendingEmail = email;
-  document.getElementById('otp-email-shown').textContent = email;
-  // In real product: send OTP via API. Here we simulate with code 123456
-  S._otpCode = '123456';
-  showScreen('otp');
-  setTimeout(()=>document.getElementById('otp-0').focus(), 200);
 }
 
 function otpInput(idx) {
@@ -2253,17 +2458,6 @@ function otpKey(e, idx) {
   if(e.key==='Enter') verifyOTP();
 }
 
-function verifyOTP() {
-  const code = [0,1,2,3,4,5].map(i=>document.getElementById('otp-'+i).value).join('');
-  if(code.length < 6) { alert('Please enter the full 6-digit code.'); return; }
-  // In real product: verify against server. Here, code 123456 always works.
-  if(code === '123456') {
-    completeLogin(S._pendingEmail);
-  } else {
-    alert('Invalid code. (Demo: use 123456)');
-  }
-}
-
 function completeLogin(email) {
   S.email = email;
   const name = email.split('@')[0];
@@ -2274,34 +2468,11 @@ function completeLogin(email) {
   else showScreen('stage');
 }
 
-function saveEmailFromZero() {
-  const email = document.getElementById('zero-email').value.trim();
-  if(!email||!email.includes('@')) { alert('Please enter a valid email.'); return; }
-  S.email = email;
-  const name = email.split('@')[0];
-  S.userName = name.charAt(0).toUpperCase()+name.slice(1);
-  persistState();
-  updateNavUserUI();
-  document.getElementById('zero-email-capture').style.display='none';
-  document.getElementById('zero-library-btn').style.display='block';
-}
-
 function skipZeroEmail() {
   S.emailCaptureShown = Math.max(S.emailCaptureShown, 1);
   localStorage.setItem('oa_ecshown', S.emailCaptureShown);
   document.getElementById('zero-email-capture').style.display='none';
   document.getElementById('zero-library-btn').style.display='block';
-}
-
-function saveEmailFromConfirm() {
-  const email = document.getElementById('confirm-email-input').value.trim();
-  if(!email||!email.includes('@')) { alert('Please enter a valid email.'); return; }
-  S.email = email;
-  const name = email.split('@')[0];
-  S.userName = name.charAt(0).toUpperCase()+name.slice(1);
-  persistState();
-  updateNavUserUI();
-  document.getElementById('confirm-email-capture').style.display='none';
 }
 
 function showEmailModal(moment) {
@@ -2378,41 +2549,6 @@ function goToZero() {
 //  SESSION ZERO
 // ══════════════════════════════════════════════════════════
 let zeroStep = 1;
-function zeroNext(n) {
-  document.getElementById('zs-'+zeroStep).classList.remove('active');
-  zeroStep = n;
-  document.getElementById('zs-'+n).classList.add('active');
-  const dots = document.querySelectorAll('#zero-dots .pdot');
-  dots.forEach((d,i)=>{
-    d.classList.remove('active','done');
-    if(i+1<n) d.classList.add('done');
-    if(i+1===n) d.classList.add('active');
-  });
-
-  // Auto-generate zero declaration on step 4
-  if(n===4) {
-    const q1 = document.getElementById('zero-q1').value.trim();
-    const q2 = document.getElementById('zero-q2').value.trim();
-    let declText;
-    if(q1||q2) {
-      declText = `"We agree that this relationship should be defined by ${q1?q1.substring(0,60)+'...':'faithfulness, honesty, and choosing each other every day.'}"`;
-    } else {
-      declText = '"We agree that this relationship should be defined by faith, honesty, and the willingness to always choose each other — even when it\'s hard."';
-    }
-    document.getElementById('zero-decl-text').textContent = declText;
-
-    // Show email capture only if not already logged in and not already shown
-    if(S.email) {
-      document.getElementById('zero-email-capture').style.display='none';
-      document.getElementById('zero-library-btn').style.display='block';
-    } else if(S.emailCaptureShown >= 1) {
-      document.getElementById('zero-email-capture').style.display='none';
-      document.getElementById('zero-library-btn').style.display='block';
-    }
-  }
-  window.scrollTo(0,0);
-}
-
 function enterLibrary() {
   buildLibrary();
   showScreen('library');
@@ -2674,12 +2810,6 @@ function showFlashDecl() {
   document.getElementById('flash-decl-section').scrollIntoView({behavior:'smooth'});
 }
 
-function saveFlashDeclaration() {
-  const txt=document.getElementById('flash-decl-input').value.trim();
-  const full='We agree that '+(txt||'we chose to have this conversation and grow closer through it.');
-  saveDeclaration(full);
-}
-
 // ══════════════════════════════════════════════════════════
 //  DEEP SESSION — V2
 // ══════════════════════════════════════════════════════════
@@ -2699,115 +2829,6 @@ function startDeep() {
   document.getElementById('sess-cat-label').textContent=cat.emoji+' '+cat.name+' · '+sess.title;
   renderSection(0);
   showScreen('session');
-}
-
-function renderSection(idx) {
-  S.secIdx=idx;
-  const secs=S.sections;
-  const sec=secs[idx];
-  const sess=sec.data;
-  const isLast=idx===secs.length-1;
-
-  const progEl=document.getElementById('sess-prog');
-  progEl.innerHTML=secs.map((_,i)=>`<div class="sp-seg ${i<idx?'done':i===idx?'active':''}"></div>`).join('');
-  document.getElementById('sess-step-label').textContent=`${SEC_NAMES[sec.type]} · ${idx+1}/${secs.length}`;
-
-  const body=document.getElementById('sess-body');
-  body.style.animation='none';
-  void body.offsetWidth;
-  body.style.animation='fadeUp 0.4s ease forwards';
-
-  const navBtns=`
-    <div class="sess-nav">
-      ${idx>0?`<button class="btn-back-sess" onclick="renderSection(${idx-1})">← Back</button>`:'<span></span>'}
-      ${isLast
-        ?`<button class="btn-finish-sess" onclick="finishDeep()">Seal Declaration ✓</button>`
-        :`<button class="btn-next-sess" onclick="renderSection(${idx+1})">Continue →</button>`
-      }
-    </div>`;
-
-  // Couple sync notice for myStory/yourStory
-  const coupleNote = S.coupleSpaceId&&S.partnerName ? {
-    myStory:`<div class="couple-sync-notice"><strong>My Story is private.</strong> Your reflections here are visible only to you — never to ${S.partnerName}.</div>`,
-    yourStory:`<div class="couple-sync-notice"><strong>Your Story</strong> answers will be shared with ${S.partnerName} once you submit this section.</div>`,
-    declaration:`<div class="couple-sync-notice"><strong>Shared Declaration.</strong> ${S.partnerName} will see your draft and can contribute before you seal it together.</div>`
-  } : {myStory:'',yourStory:'',declaration:''};
-
-  let html='';
-  switch(sec.type) {
-    case 'openPrayer': case 'closePrayer': {
-      const txt=sec.type==='openPrayer'?sess.openPrayer:sess.closePrayer;
-      const lbl=sec.type==='openPrayer'?'Opening Prayer':'Closing Prayer';
-      const subtitle=sec.type==='openPrayer'?'Before you begin.':'Before you close.';
-      html=`<div class="sec-tag">${lbl}</div><h2 class="sec-title">${subtitle}</h2>
-        <div class="prayer-block"><p class="prayer-text">"${txt}"</p><p class="prayer-cue">✦ Pray this together before continuing</p></div>
-        ${navBtns}`;
-      break;
-    }
-    case 'whyMatters': {
-      const paras=sess.why.split('\n\n').filter(Boolean);
-      html=`<div class="sec-tag">Why This Matters</div><h2 class="sec-title">${sess.title}</h2>
-        ${paras.map(p=>`<p class="why-text">${p}</p>`).join('')}
-        ${sess.scripture?`<div class="scripture-block"><p class="scripture-verse">"${sess.scripture.text}"</p><p class="scripture-ref">— ${sess.scripture.ref}</p></div>`:''}
-        ${navBtns}`;
-      break;
-    }
-    case 'myStory': {
-      html=`<div class="sec-tag">My Story</div><h2 class="sec-title">Reflect individually,<br>then share.</h2>
-        ${coupleNote.myStory}
-        <div class="q-stack">
-          ${sess.myStory.map((q,i)=>`
-            <div class="q-block">
-              <div class="q-num">Question ${i+1}</div>
-              <div class="q-text">${q}</div>
-              <textarea class="q-field" placeholder="Reflect here before sharing with your partner…"></textarea>
-              ${S.email?`<label class="q-save-toggle"><input type="checkbox" checked> <span class="q-save-label">Save this reflection to my account</span></label>`:''}
-            </div>`).join('')}
-        </div>${navBtns}`;
-      break;
-    }
-    case 'yourStory': {
-      html=`<div class="sec-tag">Your Story</div><h2 class="sec-title">Now, understand<br>your partner.</h2>
-        ${coupleNote.yourStory}
-        <div class="q-stack">
-          ${sess.yourStory.map((q,i)=>`
-            <div class="q-block">
-              <div class="q-num">Question ${i+1}</div>
-              <div class="q-text">${q}</div>
-              <textarea class="q-field" placeholder="What do you observe, know, or want to ask?"></textarea>
-            </div>`).join('')}
-        </div>${navBtns}`;
-      break;
-    }
-    case 'middle': {
-      html=`<div class="sec-tag">Find Our Middle</div><h2 class="sec-title">From two perspectives<br>to one conviction.</h2>
-        <div class="middle-stack">
-          ${sess.middle.map((p,i)=>`
-            <div class="mid-item">
-              <div class="mid-n">${i+1}</div>
-              <div class="mid-content">
-                <div class="mid-prompt">${p}</div>
-                <textarea class="q-field" placeholder="Discuss and write your answer together…"></textarea>
-              </div>
-            </div>`).join('')}
-        </div>${navBtns}`;
-      break;
-    }
-    case 'declaration': {
-      html=`<div class="sec-tag">Our Declaration</div><h2 class="sec-title">Write your<br>shared conviction.</h2>
-        ${coupleNote.declaration}
-        <p class="why-text" style="margin-bottom:0;">This is the most important part of every session. In your own words, write what you both agree on. This becomes part of your permanent shared archive.</p>
-        <div class="decl-wrap">
-          <span class="decl-preamble">We agree that...</span>
-          <textarea class="decl-field" id="decl-input" placeholder="…write your declaration here, together, in your own words."></textarea>
-          <p class="decl-hint">Take your time. Sealed declarations cannot be edited.</p>
-        </div>${navBtns}`;
-      break;
-    }
-  }
-
-  body.innerHTML=html;
-  window.scrollTo(0,0);
 }
 
 function finishDeep() {
@@ -2908,69 +2929,6 @@ function renderDecls() {
 }
 
 // ══════════════════════════════════════════════════════════
-//  PROGRESS — V2
-// ══════════════════════════════════════════════════════════
-function renderProgress() {
-  updateNavUserUI();
-  const totalSessions=CATS.reduce((acc,c)=>acc+c.sessions.length,0);
-  const completedCount=Object.keys(S.completedSessions).filter(k=>S.completedSessions[k]).length;
-  const totalDeclarations=S.declarations.length;
-  const totalAttempts=S.attempts.filter(a=>a.status==='completed').length;
-
-  const catGridHtml=CATS.map(cat=>{
-    const total=cat.sessions.length;
-    const done=cat.sessions.filter(s=>S.completedSessions[s.id]).length;
-    const pct=total>0?Math.round((done/total)*100):0;
-    return `<div class="prog-cat-item">
-      <span class="pci-emoji">${cat.emoji}</span>
-      <div class="pci-name">${cat.name}</div>
-      <div class="pci-count">${done}/${total} sessions</div>
-      <div class="pci-bar"><div class="pci-bar-fill" style="width:${pct}%"></div></div>
-      ${done===total&&total>0?`<div class="pci-complete">✓ Complete</div>`:''}
-    </div>`;
-  }).join('');
-
-  const completedAttempts=S.attempts.filter(a=>a.status==='completed').slice().reverse();
-  const timelineHtml=completedAttempts.length
-    ?completedAttempts.map(a=>`
-      <div class="timeline-item">
-        <div class="timeline-item-icon">${CATS.find(c=>c.key===S.cat&&c.sessions.find(s=>s.id===a.sessionId))?CATS.find(c=>c.sessions.find(s=>s.id===a.sessionId))?.emoji||'📖':'📖'}</div>
-        <div class="timeline-item-body">
-          <div class="timeline-item-title">${a.sessionTitle}</div>
-          <div class="timeline-item-sub">${a.category} · ${a.mode==='flash'?'⚡ Flashcard':'📖 Deep'}</div>
-        </div>
-        <div class="timeline-item-date">${a.date}</div>
-      </div>`).join('')
-    :`<div style="padding:32px;text-align:center;color:var(--muted);font-size:14px;">Complete your first session to see your timeline.</div>`;
-
-  document.getElementById('progress-wrap').innerHTML=`
-    <div class="lib-top" style="margin-bottom:28px">
-      <h2 style="font-size:24px;font-weight:800;letter-spacing:-0.5px;">Your Progress</h2>
-    </div>
-    <div class="progress-hero">
-      <div class="ph-stat">
-        <div class="ph-num">${completedCount}</div>
-        <div class="ph-label">Sessions Completed</div>
-      </div>
-      <div class="ph-stat">
-        <div class="ph-num">${totalDeclarations}</div>
-        <div class="ph-label">Declarations Sealed</div>
-      </div>
-      <div class="ph-stat">
-        <div class="ph-num">${totalAttempts}</div>
-        <div class="ph-label">Total Attempts</div>
-      </div>
-    </div>
-
-    <div class="progress-section-title">Category Overview</div>
-    <div class="prog-cat-grid">${catGridHtml}</div>
-
-    <div class="progress-section-title">Session Timeline</div>
-    <div class="timeline-list">${timelineHtml}</div>
-  `;
-}
-
-// ══════════════════════════════════════════════════════════
 //  COUPLE SYNC — V2
 // ══════════════════════════════════════════════════════════
 function buildCoupleScreen() {
@@ -3030,43 +2988,6 @@ function buildCoupleScreen() {
     `;
     enterCodeSection.style.display='block';
   }
-}
-
-function copyInviteCode() {
-  navigator.clipboard.writeText(S._generatedCode||'').then(()=>{
-    const btn=document.querySelector('.invite-copy-btn');
-    if(btn){ btn.textContent='Copied! ✓'; setTimeout(()=>btn.textContent='Copy Code',2000); }
-  });
-}
-
-function acceptInviteCode() {
-  const code=document.getElementById('enter-code-input').value.trim().toUpperCase();
-  if(code.length<4){ alert('Please enter a valid invite code.'); return; }
-
-  // Simulate accepting — in real product this would call the API
-  // We'll pretend the code matches and create a fake partner
-  const partnerEmail=prompt('Enter your partner\'s email (or we\'ll simulate it):','partner@example.com');
-  if(!partnerEmail) return;
-
-  S.coupleSpaceId = 'cs_'+Date.now();
-  S.partnerEmail = partnerEmail;
-  S.partnerName = partnerEmail.split('@')[0];
-  S.partnerName = S.partnerName.charAt(0).toUpperCase()+S.partnerName.slice(1);
-  persistState();
-  updateNavUserUI();
-  buildCoupleScreen();
-  alert(`✓ Couple Space created! You're now connected with ${S.partnerName}.`);
-}
-
-function disconnectCouple() {
-  if(!confirm('Disconnect your Couple Space? Your individual declarations are preserved.')) return;
-  S.coupleSpaceId=null; S.partnerEmail=null; S.partnerName=null;
-  localStorage.removeItem('oa_couple_space');
-  localStorage.removeItem('oa_partner_email');
-  localStorage.removeItem('oa_partner_name');
-  persistState();
-  updateNavUserUI();
-  buildCoupleScreen();
 }
 
 // ══════════════════════════════════════════════════════════
@@ -3133,18 +3054,400 @@ function buildProfileScreen() {
   `;
 }
 
-function signOut() {
-  if(!confirm('Sign out? Your progress is saved and will be here when you return.')) return;
-  S.email=null; S.userName=null;
-  localStorage.removeItem('oa_email'); localStorage.removeItem('oa_name');
-  enterLibrary();
-}
-
 // ══════════════════════════════════════════════════════════
 //  INIT
 // ══════════════════════════════════════════════════════════
 updateNavUserUI();
 buildLibrary();
+
+// ══════════════════════════════════════════════════════════
+//  MOBILE BOTTOM TAB BAR
+// ══════════════════════════════════════════════════════════
+function mobTab(tab) {
+  ['sessions','archive','progress'].forEach(t => {
+    document.getElementById('mbt-'+t).classList.toggle('on', t===tab);
+  });
+  const map = { sessions:'library', archive:'declarations', progress:'progress' };
+  showLibTab(map[tab]);
+}
+
+function syncMobTabs(screen) {
+  const map = { library:'sessions', declarations:'archive', progress:'progress' };
+  const active = map[screen];
+  if(!active) return;
+  ['sessions','archive','progress'].forEach(t => {
+    document.getElementById('mbt-'+t).classList.toggle('on', t===active);
+  });
+}
+
+// Show/hide mobile tab bar — only on library-family screens
+const LIB_SCREENS = ['library','declarations','progress'];
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
+  window.scrollTo(0,0);
+  if(name==='couple')  buildCoupleScreen();
+  if(name==='profile') buildProfileScreen();
+  const mt = document.getElementById('mob-tabs');
+  if(mt) mt.style.display = LIB_SCREENS.includes(name) ? 'grid' : 'none';
+  syncMobTabs(name);
+}
+
+// ══════════════════════════════════════════════════════════
+//  TOAST
+// ══════════════════════════════════════════════════════════
+function toast(msg, ms=2500) {
+  document.querySelectorAll('.toast-msg').forEach(e=>e.remove());
+  const el = Object.assign(document.createElement('div'), {className:'toast-msg', textContent:msg});
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), ms+400);
+}
+
+// ══════════════════════════════════════════════════════════
+//  AI BAR HELPERS
+// ══════════════════════════════════════════════════════════
+function showAI(msg, containerId) {
+  hideAI();
+  const bar = document.createElement('div');
+  bar.id = 'ai-bar'; bar.className = 'ai-bar';
+  bar.innerHTML = `<div class="ai-bar-dots"><div class="ai-bar-dot"></div><div class="ai-bar-dot"></div><div class="ai-bar-dot"></div></div><span>${msg}</span>`;
+  const target = containerId ? document.getElementById(containerId) : document.querySelector('.sess-body, .zero-body, .picker-wrap');
+  if(target) target.prepend(bar);
+}
+function hideAI() { document.querySelectorAll('#ai-bar').forEach(e=>e.remove()); }
+
+// ══════════════════════════════════════════════════════════
+//  CLAUDE API CALL
+// ══════════════════════════════════════════════════════════
+async function callClaude(prompt, maxTokens=400) {
+  const r = await fetch('https://api.anthropic.com/v1/messages', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({
+      model:'claude-sonnet-4-20250514',
+      max_tokens: maxTokens,
+      messages:[{role:'user', content:prompt}]
+    })
+  });
+  if(!r.ok) throw new Error('API '+r.status);
+  const d = await r.json();
+  return (d.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('').trim();
+}
+
+// ══════════════════════════════════════════════════════════
+//  AI: GENERATE DECLARATION
+//  Used in: Session Zero (step 4), Deep Session, Flash Session
+// ══════════════════════════════════════════════════════════
+async function aiGenerateDeclaration(context) {
+  const { sessionTitle, myAnswers=[], partnerAnswers=[], middleAnswers=[], stage='', q1='', q2='' } = context;
+  let prompt;
+
+  if(q1 || q2) {
+    // Session Zero declaration
+    prompt = [
+      'You are helping a Christian couple write their first relationship declaration.',
+      `They answered two questions:`,
+      `Person's reflection on what they want the relationship defined by: "${q1 || 'faith and intentionality'}"`,
+      `Their perception of what their partner wants: "${q2 || 'similar values and direction'}"`,
+      '',
+      'Write ONE declaration sentence starting exactly with "We agree that" — warm, personal, grounded in Christian values. Max 2 sentences. Return ONLY the declaration text, no quotes, no explanation.'
+    ].join('\n');
+  } else {
+    // Full session declaration
+    prompt = [
+      `You are helping a Christian couple write a declaration to seal their session: "${sessionTitle}".`,
+      `Relationship stage: ${stage}`,
+      myAnswers.length ? `My Story answers: ${myAnswers.filter(Boolean).join(' | ')}` : '',
+      partnerAnswers.length ? `Your Story observations: ${partnerAnswers.filter(Boolean).join(' | ')}` : '',
+      middleAnswers.length ? `Finding Our Middle: ${middleAnswers.filter(Boolean).join(' | ')}` : '',
+      '',
+      'Write ONE declaration starting exactly with "We agree that" — specific, personal, spiritually grounded. 1-2 sentences. Return ONLY the declaration text, no quotes, no explanation.'
+    ].filter(Boolean).join('\n');
+  }
+
+  return await callClaude(prompt, 120);
+}
+
+// ══════════════════════════════════════════════════════════
+//  AI: PROGRESS ENCOURAGEMENT
+// ══════════════════════════════════════════════════════════
+async function aiProgressInsight(completedCount, totalCount, declarations) {
+  const sample = declarations.slice(0,3).map(d=>d.text||d.declaration||'').filter(Boolean);
+  const prompt = [
+    `A Christian couple is using OneAccord for guided conversations. They have completed ${completedCount} of ${totalCount} sessions.`,
+    sample.length ? `Some of their declarations: ${JSON.stringify(sample)}` : '',
+    '',
+    'Write 1 short sentence of warm, genuine encouragement about their progress. Be specific if possible. Under 25 words. Return ONLY the sentence.'
+  ].filter(Boolean).join('\n');
+  return await callClaude(prompt, 60);
+}
+
+// ══════════════════════════════════════════════════════════
+//  PATCH: SESSION ZERO step 4 → AI declaration
+// ══════════════════════════════════════════════════════════
+const _zeroNext_orig = zeroNext;
+function zeroNext(n) {
+  if(n === 4) {
+    // Transition to step 4 immediately
+    document.getElementById('zs-'+zeroStep).classList.remove('active');
+    zeroStep = n;
+    document.getElementById('zs-'+n).classList.add('active');
+    document.querySelectorAll('#zero-dots .pdot').forEach((d,i)=>{
+      d.classList.toggle('done', i+1<n);
+      d.classList.toggle('active', i+1===n);
+    });
+    window.scrollTo(0,0);
+
+    const q1 = (document.getElementById('zero-q1')||{}).value||'';
+    const q2 = (document.getElementById('zero-q2')||{}).value||'';
+    const declEl = document.getElementById('zero-decl-text');
+    const fallback = "We agree that this relationship should be defined by faith, honesty, and the willingness to always choose each other — even when it's hard.";
+
+    if(declEl) declEl.textContent = '✦ Crafting your declaration…';
+
+    aiGenerateDeclaration({q1: q1.trim(), q2: q2.trim()})
+      .then(ai => {
+        const final = (ai && ai.length > 10) ? ai : fallback;
+        if(declEl) declEl.textContent = '"' + final + '"';
+      })
+      .catch(() => { if(declEl) declEl.textContent = '"' + fallback + '"'; });
+
+    // Email capture visibility
+    if(S.email) {
+      document.getElementById('zero-email-capture').style.display = 'none';
+      document.getElementById('zero-library-btn').style.display = 'block';
+    }
+    return;
+  }
+  _zeroNext_orig(n);
+}
+
+// ══════════════════════════════════════════════════════════
+//  PATCH: DEEP SESSION — AI declaration suggestion
+//  When user clicks "Seal Declaration" with empty field, AI fills it
+// ══════════════════════════════════════════════════════════
+const _finishDeep_orig = typeof finishDeep !== 'undefined' ? finishDeep : null;
+// We override the Seal button click handler via a wrapper
+function sealDeclarationAI() {
+  const inp = document.getElementById('decl-input');
+  const raw = inp ? inp.value.trim() : '';
+
+  if(raw && raw.length > 10) {
+    // User wrote something — use directly
+    const text = raw.startsWith('We agree') ? raw : 'We agree that ' + raw;
+    saveDeclaration(text);
+    return;
+  }
+
+  // Empty — collect answers and use AI
+  const myAnswers   = [...document.querySelectorAll('[data-section="myStory"] .q-field')].map(f=>f.value.trim()).filter(Boolean);
+  const partAnswers = [...document.querySelectorAll('[data-section="yourStory"] .q-field')].map(f=>f.value.trim()).filter(Boolean);
+  const midAnswers  = [...document.querySelectorAll('[data-section="middle"] .q-field')].map(f=>f.value.trim()).filter(Boolean);
+
+  const cat = CATS.find(c=>c.key===S.cat);
+  const title = S.session ? S.session.title : (cat ? cat.name : 'this session');
+
+  if(inp) inp.value = 'Generating…';
+  if(inp) inp.disabled = true;
+
+  aiGenerateDeclaration({
+    sessionTitle: title, stage: S.stage||'',
+    myAnswers, partnerAnswers: partAnswers, middleAnswers: midAnswers
+  })
+  .then(ai => {
+    const text = (ai && ai.length>10) ? ai : 'We agree that we are committed to this conversation and to each other.';
+    if(inp) { inp.value = text; inp.disabled = false; }
+    saveDeclaration(text);
+  })
+  .catch(() => {
+    if(inp) inp.disabled = false;
+    saveDeclaration('We agree that we are committed to this conversation and to each other.');
+  });
+}
+
+// ══════════════════════════════════════════════════════════
+//  PATCH: FLASH SESSION — AI declaration
+// ══════════════════════════════════════════════════════════
+const _saveFlashDeclaration_orig = saveFlashDeclaration;
+function saveFlashDeclaration() {
+  const inp = document.getElementById('flash-decl-input');
+  const raw = inp ? inp.value.trim() : '';
+
+  if(raw && raw.length > 10) {
+    _saveFlashDeclaration_orig ? _saveFlashDeclaration_orig() : saveDeclaration(raw.startsWith('We agree') ? raw : 'We agree that '+raw);
+    return;
+  }
+
+  const cat = CATS.find(c=>c.key===S.cat);
+  if(inp) { inp.value = 'Generating…'; inp.disabled=true; }
+
+  aiGenerateDeclaration({ sessionTitle: S.session?S.session.title:(cat?cat.name:'this session'), stage:S.stage||'' })
+  .then(ai => {
+    const text = ai && ai.length>10 ? ai : 'We agree that this conversation brought us closer.';
+    if(inp) { inp.value = text; inp.disabled=false; }
+    const declText = text.startsWith('We agree') ? text : 'We agree that '+text;
+    saveDeclaration(declText);
+  })
+  .catch(() => {
+    if(inp) inp.disabled=false;
+    _saveFlashDeclaration_orig ? _saveFlashDeclaration_orig() : null;
+  });
+}
+
+// ══════════════════════════════════════════════════════════
+//  PATCH: PROGRESS — inject AI encouragement
+// ══════════════════════════════════════════════════════════
+const _renderProgress_orig = renderProgress;
+function renderProgress() {
+  _renderProgress_orig();
+  const completedCount = Object.keys(S.completedSessions).filter(k=>S.completedSessions[k]).length;
+  if(!completedCount) return;
+  const total = CATS.reduce((a,c)=>a+c.sessions.length,0);
+  aiProgressInsight(completedCount, total, S.declarations)
+    .then(msg => {
+      if(!msg) return;
+      const hero = document.querySelector('#screen-progress .progress-hero');
+      if(!hero) return;
+      const el = document.createElement('div');
+      el.style.cssText='background:var(--lime-bg);border:1px solid #c8e87a;border-radius:12px;padding:14px 18px;margin-bottom:20px;font-size:14px;color:#4a6b1a;line-height:1.6;font-style:italic;';
+      el.textContent='✦ '+msg.trim();
+      hero.insertAdjacentElement('afterend', el);
+    }).catch(()=>{});
+}
+
+// ══════════════════════════════════════════════════════════
+//  PATCH: AUTH — replace alert() with toast()
+// ══════════════════════════════════════════════════════════
+const _sendOTP_orig = sendOTP;
+function sendOTP() {
+  const email = (document.getElementById('auth-email-input')||{}).value||'';
+  if(!email.trim()||!email.includes('@')) { toast('Please enter a valid email address.'); return; }
+  _sendOTP_orig();
+}
+
+const _verifyOTP_orig = verifyOTP;
+function verifyOTP() {
+  const code = [0,1,2,3,4,5].map(i=>(document.getElementById('otp-'+i)||{}).value||'').join('');
+  if(code.length<6) { toast('Please enter the full 6-digit code.'); return; }
+  if(code !== (S._otpCode||'123456')) { toast('Invalid code. (Demo: use 123456)'); return; }
+  completeLogin(S._pendingEmail);
+  toast('✓ Signed in!');
+}
+
+// ══════════════════════════════════════════════════════════
+//  PATCH: COUPLE SYNC — replace prompt() with inline form
+// ══════════════════════════════════════════════════════════
+function acceptInviteCode() {
+  const code = (document.getElementById('enter-code-input')||{}).value||'';
+  if(!code.trim()||code.trim().length<4) { toast('Please enter a valid invite code.'); return; }
+  const codeClean = code.trim().toUpperCase();
+  const sec = document.getElementById('enter-code-section');
+  if(!sec) return;
+  sec.innerHTML = `
+    <div class="enter-code-title">Enter your partner's email to confirm</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <input class="enter-code-input" type="email" id="partner-email-conf"
+        placeholder="partner@email.com"
+        style="letter-spacing:normal;font-size:15px;text-align:left;font-weight:400;text-transform:none"
+        onkeydown="if(event.key==='Enter')confirmJoin('${codeClean}')">
+      <button class="enter-code-btn" style="width:100%;text-align:center"
+        onclick="confirmJoin('${codeClean}')">Link Accounts →</button>
+      <button onclick="buildCoupleScreen()"
+        style="background:none;border:none;font-family:inherit;font-size:13px;color:var(--muted);cursor:pointer;text-align:center;padding:4px 0">
+        ← Back
+      </button>
+    </div>`;
+}
+
+function confirmJoin(code) {
+  const email = (document.getElementById('partner-email-conf')||{}).value||'';
+  if(!email.trim()||!email.includes('@')) { toast('Please enter a valid email.'); return; }
+  S.coupleSpaceId = 'cs_'+Date.now();
+  S.partnerEmail = email.trim();
+  const raw = email.trim().split('@')[0];
+  S.partnerName = raw.charAt(0).toUpperCase()+raw.slice(1);
+  persistState();
+  updateNavUserUI();
+  buildCoupleScreen();
+  toast('✓ Couple Space created! Connected with '+S.partnerName);
+}
+
+function copyInviteCode() {
+  const code = S._generatedCode||'';
+  const copy = t => { toast('Invite code copied!'); };
+  if(navigator.clipboard&&navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(code).then(copy).catch(()=>copy());
+  } else {
+    try{const ta=Object.assign(document.createElement('textarea'),{value:code});document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();}catch(e){}
+    copy();
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+//  PATCH: EMAIL SAVE HELPERS → toast instead of alert
+// ══════════════════════════════════════════════════════════
+function saveEmailFromZero() {
+  const email = (document.getElementById('zero-email')||{}).value||'';
+  if(!email.trim()||!email.includes('@')) { toast('Please enter a valid email.'); return; }
+  S.email = email.trim();
+  S.userName = email.split('@')[0]; S.userName = S.userName.charAt(0).toUpperCase()+S.userName.slice(1);
+  persistState(); updateNavUserUI();
+  document.getElementById('zero-email-capture').style.display='none';
+  document.getElementById('zero-library-btn').style.display='block';
+  toast('✓ Progress saved!');
+}
+
+function saveEmailFromConfirm() {
+  const email = (document.getElementById('confirm-email-input')||{}).value||'';
+  if(!email.trim()||!email.includes('@')) { toast('Please enter a valid email.'); return; }
+  S.email = email.trim();
+  S.userName = email.split('@')[0]; S.userName = S.userName.charAt(0).toUpperCase()+S.userName.slice(1);
+  persistState(); updateNavUserUI();
+  document.getElementById('confirm-email-capture').style.display='none';
+  toast('✓ Declaration saved to your account!');
+}
+
+function signOut() {
+  if(!confirm('Sign out? Your progress is saved.')) return;
+  S.email=null; S.userName=null;
+  localStorage.removeItem('oa_email'); localStorage.removeItem('oa_name');
+  enterLibrary(); toast('Signed out.');
+}
+
+function disconnectCouple() {
+  if(!confirm('Disconnect your Couple Space? Your individual data is preserved.')) return;
+  S.coupleSpaceId=null; S.partnerEmail=null; S.partnerName=null;
+  localStorage.removeItem('oa_couple_space'); localStorage.removeItem('oa_partner_email'); localStorage.removeItem('oa_partner_name');
+  persistState(); updateNavUserUI(); buildCoupleScreen();
+  toast('Couple Space disconnected.');
+}
+
+// ══════════════════════════════════════════════════════════
+//  PATCH: SEAL button in deep session — use AI-enhanced version
+//  We patch the rendered HTML to call sealDeclarationAI()
+// ══════════════════════════════════════════════════════════
+const _renderSection_orig = renderSection;
+function renderSection() {
+  _renderSection_orig();
+  // Replace "Seal" button onclick if present
+  setTimeout(()=>{
+    const seal = document.querySelector('.btn-finish-sess[onclick*="finishDeep"]');
+    if(seal) seal.setAttribute('onclick','sealDeclarationAI()');
+    // Also tag question fields by section for AI context collection
+    const body = document.getElementById('sess-body');
+    if(!body) return;
+    const sections = ['openPrayer','whyMatters','myStory','yourStory','middle','declaration','closePrayer'];
+    const cur = sections[S.secIdx];
+    body.querySelectorAll('.q-field').forEach(f=>f.setAttribute('data-section', cur||''));
+  },0);
+}
+
+// Initial mobile nav setup
+(function initMobileNav(){
+  const mt = document.getElementById('mob-tabs');
+  if(mt) mt.style.display='none'; // hidden by default, shown only on lib screens
+})();
+
 </script>
 </body>
 </html>
