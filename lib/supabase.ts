@@ -11,5 +11,6 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export const supabaseAdmin = createClient(
   supabaseUrl,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || ''
-);
+if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  throw new Error('Missing SUPABASE_SERVICE_ROLE_KEY');
+}
