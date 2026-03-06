@@ -1,4 +1,4 @@
-import { supabase, supabaseAdmin } from '@/lib/supabase';
+import { supabaseAdmin, supabaseAdmin } from '@/lib/supabaseAdmin';
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 
@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from('couples')
       .select('*')
       .or(`user1_id.eq.${userId},user2_id.eq.${userId}`);
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
       // Create a new couple with a generated code
       const code = crypto.randomBytes(6).toString('hex').toUpperCase();
 
-      const { data, error } = await supabase
+      const { data, error } = await supabaseAdmin
         .from('couples')
         .insert([
           {
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Find the couple with this code
-      const { data: couple, error: findError } = await supabase
+      const { data: couple, error: findError } = await supabaseAdmin
         .from('couples')
         .select('*')
         .eq('coupling_code', coupling_code)
@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Check if user is already in a couple
-      const { data: existing } = await supabase
+      const { data: existing } = await supabaseAdmin
         .from('couples')
         .select('*')
         .or(`user1_id.eq.${user_id},user2_id.eq.${user_id}`)
@@ -102,7 +102,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Update the couple to add the second user
-      const { data: updated, error: updateError } = await supabase
+      const { data: updated, error: updateError } = await supabaseAdmin
         .from('couples')
         .update({
           user2_id: user_id,
@@ -116,12 +116,12 @@ export async function POST(request: NextRequest) {
       if (updateError) throw updateError;
 
       // Update both profiles to reference the couple
-      await supabase
+      await supabaseAdmin
         .from('profiles')
         .update({ couple_id: couple.id })
         .eq('id', couple.user1_id);
 
-      await supabase
+      await supabaseAdmin
         .from('profiles')
         .update({ couple_id: couple.id })
         .eq('id', user_id);
