@@ -1,4 +1,4 @@
-import { supabaseAdmin, supabaseAdmin } from '@/lib/supabaseAdmin';
+import { supabaseAdmin} from '@/lib/supabaseAdmin';
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 
@@ -46,14 +46,14 @@ export async function POST(request: NextRequest) {
 
     if (action === 'create') {
       // Create a new couple with a generated code
-      const code = crypto.randomBytes(6).toString('hex').toUpperCase();
+      const code = crypto.randomBytes(3).toString('hex').toUpperCase();
 
       const { data, error } = await supabaseAdmin
         .from('couples')
         .insert([
           {
-            user1_id,
-            user2_id: user_id, // placeholder, will be updated when partner joins
+            user1_id: user_id,
+            user2_id: null, // placeholder, will be updated when partner joins
             coupling_code: code,
             status: 'pending',
           },
@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
         .from('couples')
         .select('*')
         .or(`user1_id.eq.${user_id},user2_id.eq.${user_id}`)
-        .single();
+        .maybesingle();
 
       if (existing) {
         return NextResponse.json(
