@@ -1,4 +1,4 @@
-import { supabaseAdmin} from '@/lib/supabaseAdmin';
+import { supabaseAdmin} from '@/lib/supabase';
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 
