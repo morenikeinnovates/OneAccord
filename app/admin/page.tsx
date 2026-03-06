@@ -27,7 +27,6 @@ interface Couple {
 
 export default function AdminDashboard() {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<'users' | 'couples' | 'analytics'>('users');
   const [users, setUsers] = useState<User[]>([]);
   const [couples, setCouples] = useState<Couple[]>([]);
@@ -43,7 +42,6 @@ export default function AdminDashboard() {
           router.push('/');
           return;
         }
-        setUser(session.user);
 
         // For now, we'll allow access if user is authenticated
         // In production, verify admin role here
