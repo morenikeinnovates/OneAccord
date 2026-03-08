@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
-import type { Declaration } from '@/lib/types';
+import { useEffect, useState, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
+import type { Declaration } from "@/lib/types";
 
-export default function DeclarationsPage() {
+function DeclarationsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const sessionId = searchParams.get('sessionId');
+  const sessionId = searchParams.get("sessionId");
 
   const [user, setUser] = useState<any>(null);
   const [couple, setCouple] = useState<any>(null);
@@ -16,30 +16,32 @@ export default function DeclarationsPage() {
   const [isPartner, setIsPartner] = useState(false);
   const [approved, setApproved] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [editedText, setEditedText] = useState('');
+  const [editedText, setEditedText] = useState("");
   const [generating, setGenerating] = useState(false);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const init = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession();
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
         if (!session) {
-          router.push('/');
+          router.push("/");
           return;
         }
         setUser(session.user);
 
         // Get user's couple
         const { data: couples } = await supabase
-          .from('couples')
-          .select('*')
+          .from("couples")
+          .select("*")
           .or(`user1_id.eq.${session.user.id},user2_id.eq.${session.user.id}`);
 
         if (!couples || couples.length === 0) {
-          setError('No couple found');
+          setError("No couple found");
           setLoading(false);
           return;
         }
@@ -52,10 +54,10 @@ export default function DeclarationsPage() {
         let decl;
         if (sessionId) {
           const { data: existingDecl } = await supabase
-            .from('declarations')
-            .select('*')
-            .eq('session_id', sessionId)
-            .eq('couple_id', userCouple.id)
+            .from("declarations")
+            .select("*")
+            .eq("session_id", sessionId)
+            .eq("couple_id", userCouple.id)
             .single();
 
           if (existingDecl) {
@@ -63,7 +65,7 @@ export default function DeclarationsPage() {
           } else {
             // Create empty declaration
             const { data: newDecl } = await supabase
-              .from('declarations')
+              .from("declarations")
               .insert([
                 {
                   session_id: sessionId,
@@ -76,10 +78,10 @@ export default function DeclarationsPage() {
           }
         } else {
           const { data: lastDecl } = await supabase
-            .from('declarations')
-            .select('*')
-            .eq('couple_id', userCouple.id)
-            .order('created_at', { ascending: false })
+            .from("declarations")
+            .select("*")
+            .eq("couple_id", userCouple.id)
+            .order("created_at", { ascending: false })
             .limit(1)
             .single();
           decl = lastDecl;
@@ -114,23 +116,23 @@ export default function DeclarationsPage() {
     if (!declaration || !couple) return;
 
     setGenerating(true);
-    setError('');
+    setError("");
 
     try {
       // Get session info to extract category
       const { data: session } = await supabase
-        .from('sessions')
-        .select('category_key')
-        .eq('id', declaration.session_id)
+        .from("sessions")
+        .select("category_key")
+        .eq("id", declaration.session_id)
         .single();
 
-      const response = await fetch('/api/declarations/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/declarations/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           session_id: declaration.session_id,
           couple_id: couple.id,
-          category_key: session?.category_key || 'foundation',
+          category_key: session?.category_key || "foundation",
         }),
       });
 
@@ -143,7 +145,7 @@ export default function DeclarationsPage() {
       setDeclaration(updatedDecl);
       setEditedText(updatedDecl.draft_text);
     } catch (err: any) {
-      setError(err.message || 'Failed to generate declaration');
+      setError(err.message || "Failed to generate declaration");
     } finally {
       setGenerating(false);
     }
@@ -153,7 +155,7 @@ export default function DeclarationsPage() {
     if (!declaration || !user) return;
 
     setSaving(true);
-    setError('');
+    setError("");
 
     try {
       const updateData: Record<string, any> = {
@@ -171,9 +173,9 @@ export default function DeclarationsPage() {
         updateData.user1_approved = true;
       }
 
-      const response = await fetch('/api/declarations', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/declarations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updateData),
       });
 
@@ -187,7 +189,7 @@ export default function DeclarationsPage() {
       setApproved(true);
       setEditMode(false);
     } catch (err: any) {
-      setError(err.message || 'Failed to save declaration');
+      setError(err.message || "Failed to save declaration");
     } finally {
       setSaving(false);
     }
@@ -201,8 +203,11 @@ export default function DeclarationsPage() {
     );
   }
 
-  const displayText = editMode ? editedText : declaration?.final_text || declaration?.draft_text || '';
-  const bothApproved = declaration?.user1_approved && declaration?.user2_approved;
+  const displayText = editMode
+    ? editedText
+    : declaration?.final_text || declaration?.draft_text || "";
+  const bothApproved =
+    declaration?.user1_approved && declaration?.user2_approved;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -214,7 +219,9 @@ export default function DeclarationsPage() {
           >
             ← Back
           </button>
-          <h1 className="text-lg font-semibold text-gray-900">Our Declaration</h1>
+          <h1 className="text-lg font-semibold text-gray-900">
+            Our Declaration
+          </h1>
           <div />
         </div>
       </nav>
@@ -227,16 +234,22 @@ export default function DeclarationsPage() {
         )}
 
         <div className="bg-white rounded-lg shadow p-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Couple's Declaration</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+            Couple's Declaration
+          </h2>
           <p className="text-gray-600 mb-8">
-            Review and approve your declaration. Once both partners approve, it will be sealed.
+            Review and approve your declaration. Once both partners approve, it
+            will be sealed.
           </p>
 
           {bothApproved && (
             <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-              <p className="text-green-800 font-semibold">✓ This declaration is sealed and complete.</p>
+              <p className="text-green-800 font-semibold">
+                ✓ This declaration is sealed and complete.
+              </p>
               <p className="text-green-700 text-sm mt-1">
-                Both partners have approved on {new Date(declaration?.sealed_at || '').toLocaleDateString()}
+                Both partners have approved on{" "}
+                {new Date(declaration?.sealed_at || "").toLocaleDateString()}
               </p>
             </div>
           )}
@@ -244,14 +257,15 @@ export default function DeclarationsPage() {
           {!displayText && !generating && (
             <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
               <p className="text-blue-800 mb-4">
-                Generate an AI-assisted declaration based on your responses, or write your own.
+                Generate an AI-assisted declaration based on your responses, or
+                write your own.
               </p>
               <button
                 onClick={handleGenerateDeclaration}
                 disabled={generating}
                 className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-2 px-4 rounded-lg transition"
               >
-                {generating ? 'Generating...' : 'Generate Declaration'}
+                {generating ? "Generating..." : "Generate Declaration"}
               </button>
             </div>
           )}
@@ -277,7 +291,7 @@ export default function DeclarationsPage() {
                     onClick={() => setEditMode(!editMode)}
                     className="w-full bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg transition"
                   >
-                    {editMode ? 'Done Editing' : 'Edit Declaration'}
+                    {editMode ? "Done Editing" : "Edit Declaration"}
                   </button>
 
                   <button
@@ -285,11 +299,15 @@ export default function DeclarationsPage() {
                     disabled={saving || approved}
                     className={`w-full font-semibold py-3 px-4 rounded-lg transition ${
                       approved
-                        ? 'bg-green-600 text-white cursor-not-allowed'
-                        : 'bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white'
+                        ? "bg-green-600 text-white cursor-not-allowed"
+                        : "bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white"
                     }`}
                   >
-                    {saving ? 'Saving...' : approved ? 'You Approved ✓' : 'Approve & Seal'}
+                    {saving
+                      ? "Saving..."
+                      : approved
+                        ? "You Approved ✓"
+                        : "Approve & Seal"}
                   </button>
                 </div>
               )}
@@ -300,7 +318,9 @@ export default function DeclarationsPage() {
             <div className="flex items-center justify-center py-12">
               <div className="text-center">
                 <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-                <p className="mt-4 text-gray-600">Generating your declaration...</p>
+                <p className="mt-4 text-gray-600">
+                  Generating your declaration...
+                </p>
               </div>
             </div>
           )}
@@ -308,34 +328,68 @@ export default function DeclarationsPage() {
           {/* Approval Status */}
           {!bothApproved && declaration && (
             <div className="mt-8 pt-8 border-t border-gray-200">
-              <h3 className="font-semibold text-gray-900 mb-4">Approval Status</h3>
+              <h3 className="font-semibold text-gray-900 mb-4">
+                Approval Status
+              </h3>
               <div className="space-y-2">
                 <div
                   className={`flex items-center gap-3 p-3 rounded-lg ${
-                    declaration.user1_approved ? 'bg-green-50' : 'bg-gray-50'
+                    declaration.user1_approved ? "bg-green-50" : "bg-gray-50"
                   }`}
                 >
-                  <span className={declaration.user1_approved ? 'text-green-600 text-xl' : 'text-gray-400'}>
-                    {declaration.user1_approved ? '✓' : '○'}
+                  <span
+                    className={
+                      declaration.user1_approved
+                        ? "text-green-600 text-xl"
+                        : "text-gray-400"
+                    }
+                  >
+                    {declaration.user1_approved ? "✓" : "○"}
                   </span>
-                  <span className={declaration.user1_approved ? 'text-green-800 font-medium' : 'text-gray-600'}>
+                  <span
+                    className={
+                      declaration.user1_approved
+                        ? "text-green-800 font-medium"
+                        : "text-gray-600"
+                    }
+                  >
                     Partner 1
                   </span>
-                  {declaration.user1_approved && <span className="text-sm text-green-700 ml-auto">Approved</span>}
+                  {declaration.user1_approved && (
+                    <span className="text-sm text-green-700 ml-auto">
+                      Approved
+                    </span>
+                  )}
                 </div>
 
                 <div
                   className={`flex items-center gap-3 p-3 rounded-lg ${
-                    declaration.user2_approved ? 'bg-green-50' : 'bg-gray-50'
+                    declaration.user2_approved ? "bg-green-50" : "bg-gray-50"
                   }`}
                 >
-                  <span className={declaration.user2_approved ? 'text-green-600 text-xl' : 'text-gray-400'}>
-                    {declaration.user2_approved ? '✓' : '○'}
+                  <span
+                    className={
+                      declaration.user2_approved
+                        ? "text-green-600 text-xl"
+                        : "text-gray-400"
+                    }
+                  >
+                    {declaration.user2_approved ? "✓" : "○"}
                   </span>
-                  <span className={declaration.user2_approved ? 'text-green-800 font-medium' : 'text-gray-600'}>
+                  <span
+                    className={
+                      declaration.user2_approved
+                        ? "text-green-800 font-medium"
+                        : "text-gray-600"
+                    }
+                  >
                     Partner 2
                   </span>
-                  {declaration.user2_approved && <span className="text-sm text-green-700 ml-auto">Approved</span>}
+                  {declaration.user2_approved && (
+                    <span className="text-sm text-green-700 ml-auto">
+                      Approved
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -343,5 +397,19 @@ export default function DeclarationsPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function DeclarationsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      }
+    >
+      <DeclarationsContent />
+    </Suspense>
   );
 }

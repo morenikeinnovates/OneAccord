@@ -84,7 +84,7 @@ Generate a declaration that feels authentic to their journey together. Format it
       model: 'openai/gpt-4o',
       prompt,
       temperature: 0.8,
-      maxTokens: 500,
+      // maxTokens: 500,
     });
 
     // Save draft declaration to database

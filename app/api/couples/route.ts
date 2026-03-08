@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
         .from('couples')
         .select('*')
         .or(`user1_id.eq.${user_id},user2_id.eq.${user_id}`)
-        .maybesingle();
+        .maybeSingle();
 
       if (existing) {
         return NextResponse.json(

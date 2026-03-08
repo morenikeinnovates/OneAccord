@@ -1,0 +1,10 @@
+app/api/declarations/generate/route.ts(87,7): error TS2353: Object literal may only specify known properties, and 'maxTokens' does not exist in type 'CallSettings & { system?: string | SystemModelMessage | SystemModelMessage[] | undefined; } & { prompt: string | ModelMessage[]; messages?: undefined; } & { ...; }'.
+app/api/declarations/route.ts(54,73): error TS6133: 'sealed' is declared but its value is never read.
+app/page.tsx(15,15): error TS2345: Argument of type 'User | null' is not assignable to parameter of type 'SetStateAction<null>'.
+  Type 'User' is not assignable to type 'SetStateAction<null>'.
+    Type 'User' provides no match for the signature '(prevState: null): null'.
+app/page.tsx(22,15): error TS2345: Argument of type 'User | null' is not assignable to parameter of type 'SetStateAction<null>'.
+  Type 'User' is not assignable to type 'SetStateAction<null>'.
+    Type 'User' provides no match for the signature '(prevState: null): null'.
+app/session/page.tsx(14,9): error TS6133: 'mode' is declared but its value is never read.
+components/CoupleLink.tsx(4,1): error TS6133: 'supabase' is declared but its value is never read.

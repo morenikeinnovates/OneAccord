@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { declaration_id, final_text, user1_approved, user2_approved, sealed } = body;
+    const { declaration_id, final_text, user1_approved, user2_approved } = body;
 
     if (!declaration_id) {
       return NextResponse.json(
